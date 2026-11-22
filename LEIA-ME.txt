@@ -1,0 +1,24 @@
+====================================================================
+CONTROLE FINANCEIRO PWA — PASSO A PASSO FINAL
+====================================================================
+
+1. COLAR AS CHAVES DO FIREBASE
+   - Abra `firebase-config.js` no VS Code ou Bloco de Notas.
+   - Substitua o bloco `firebaseConfig` pelas chaves copiadas do Console do Firebase.
+   - Salve o arquivo.
+
+2. ATIVAR AS REGRAS DE SEGURANÇA NO FIRESTORE
+   - No Firebase Console: Bancos de dados e armazenamento > Cloud Firestore > aba Regras.
+   - Cole o conteúdo de `firestore.rules`, trocando os dois e-mails pelos que você
+     cadastrou em Segurança > Authentication > Usuários.
+   - Clique em PUBLICAR.
+
+3. SUBIR O APP EM HTTPS GRATUITO
+   - GitHub Pages: suba TODOS os arquivos desta pasta (incluindo a pasta `icons/`)
+     para um repositório e ative Settings > Pages > Branch main > / (root).
+   - OU Netlify Drop: acesse https://app.netlify.com/drop e arraste esta pasta inteira.
+
+4. INSTALAR NOS DOIS CELULARES
+   - iPhone (Safari): Compartilhar > Adicionar à Tela de Início > Adicionar.
+   - Android (Chrome): menu ⋮ > Instalar aplicativo.
+   - Faça login com um dos dois e-mails cadastrados.

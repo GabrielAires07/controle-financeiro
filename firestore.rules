@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Libera leitura e gravação apenas para os dois e-mails cadastrados em Authentication > Usuários
+    match /meses/{monthId} {
+      allow read, write: if request.auth != null
+        && request.auth.token.email in [
+          "gabriel@exemplo.com",
+          "sabrina@exemplo.com"
+        ];
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
