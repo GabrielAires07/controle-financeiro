@@ -164,6 +164,7 @@
       border-radius: 12px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       font-size: 0.9rem;
     }
@@ -211,7 +212,7 @@
       padding: 16px 16px 32px;
     }
 
-    /* Header */
+    /* Header (Desktop: 1 linha limpa | Mobile: marca + 3 pontinhos na direita, depois mês e botão 100%) */
     .topbar {
       display: flex;
       flex-wrap: wrap;
@@ -227,6 +228,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
     .brand-icon {
       width: 42px;
@@ -244,6 +246,7 @@
     .brand-sub {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 8px;
       font-size: 0.78rem;
       color: var(--muted);
@@ -277,7 +280,7 @@
       padding: 5px 8px;
     }
     .month-nav button {
-      width: 32px; height: 32px;
+      width: 34px; height: 34px;
       border-radius: 10px;
       display: grid;
       place-items: center;
@@ -292,22 +295,25 @@
       text-transform: capitalize;
     }
 
-    .top-actions {
+    .topbar-right {
       display: flex;
       align-items: center;
       gap: 8px;
+    }
+
+    .menu-wrap {
       position: relative;
+      flex-shrink: 0;
     }
 
     .menu-btn {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
       background: var(--card);
       border: 1px solid var(--border);
       display: grid;
       place-items: center;
-      font-size: 1.2rem;
       color: var(--text);
     }
     .menu-btn:hover { background: var(--card-hover); }
@@ -316,13 +322,14 @@
       position: absolute;
       right: 0;
       top: 48px;
-      width: 230px;
+      width: 240px;
+      max-width: calc(100vw - 32px);
       background: var(--card);
       border: 1px solid var(--border-strong);
       border-radius: 14px;
       padding: 6px;
       box-shadow: var(--shadow);
-      z-index: 60;
+      z-index: 80;
     }
     .dropdown-user {
       padding: 8px 10px;
@@ -340,8 +347,10 @@
       font-size: 0.88rem;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
+      color: var(--text);
     }
+    .dropdown button svg { flex-shrink: 0; opacity: 0.85; }
     .dropdown button:hover { background: var(--card-hover); }
     .dropdown button.danger { color: #fda4af; }
 
@@ -358,7 +367,7 @@
       gap: 12px;
       font-size: 0.88rem;
     }
-    .banner button { color: var(--muted); font-size: 1.1rem; padding: 4px 8px; }
+    .banner button { color: var(--muted); font-size: 1.1rem; padding: 4px 8px; flex-shrink: 0; }
 
     /* KPI Grid */
     .kpi-grid {
@@ -374,6 +383,18 @@
       padding: 16px 18px;
       position: relative;
       overflow: hidden;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+    .kpi-card.clickable {
+      cursor: pointer;
+    }
+    .kpi-card.clickable:hover {
+      background: var(--card-hover);
+      border-color: rgba(139, 92, 246, 0.45);
+      transform: translateY(-1px);
+    }
+    .kpi-card.clickable:active {
+      transform: scale(0.985);
     }
     .kpi-card::after {
       content: "";
@@ -408,6 +429,7 @@
       border-radius: 999px;
       background: rgba(148, 163, 184, 0.14);
       color: var(--text);
+      white-space: nowrap;
     }
     .kpi-chip.green { background: var(--emerald-soft); color: #6ee7b7; }
     .kpi-chip.red { background: var(--rose-soft); color: #fda4af; }
@@ -415,6 +437,9 @@
       font-size: 0.78rem;
       font-weight: 700;
       color: #34d399;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
     .kpi-value {
       font-size: 1.55rem;
@@ -435,6 +460,17 @@
     }
     .kpi-foot strong { color: var(--text); font-weight: 600; }
     .kpi-foot strong.amber { color: #fbbf24; }
+    .kpi-link-hint {
+      margin-top: 8px;
+      padding-top: 7px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #a5b4fc;
+    }
 
     .progress-track {
       width: 100%;
@@ -451,7 +487,7 @@
       transition: width 0.35s ease;
     }
 
-    /* Tabs bar */
+    /* Tabs bar (FIXA, sem scroll horizontal) */
     .tabs-bar {
       display: flex;
       flex-wrap: wrap;
@@ -461,14 +497,13 @@
       margin-bottom: 16px;
     }
     .tabs {
-      display: inline-flex;
+      display: grid;
+      grid-template-columns: repeat(3, auto);
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 4px;
       gap: 4px;
-      max-width: 100%;
-      overflow-x: auto;
     }
     .tab-btn {
       padding: 9px 14px;
@@ -476,6 +511,7 @@
       font-size: 0.88rem;
       font-weight: 600;
       color: var(--muted);
+      text-align: center;
       white-space: nowrap;
       transition: background 0.15s, color 0.15s;
     }
@@ -485,7 +521,7 @@
       box-shadow: inset 0 0 0 1px var(--border-strong);
     }
 
-    /* Filters */
+    /* Filters + SVG Search Input */
     .filters-box {
       background: var(--card);
       border: 1px solid var(--border);
@@ -496,6 +532,21 @@
       gap: 10px;
       margin-bottom: 16px;
     }
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .search-icon {
+      position: absolute;
+      left: 13px;
+      width: 17px;
+      height: 17px;
+      color: var(--muted);
+      pointer-events: none;
+      flex-shrink: 0;
+    }
     .filters-box input, .filters-box select {
       background: var(--bg-elev);
       border: 1px solid var(--border);
@@ -504,6 +555,9 @@
       font-size: 0.88rem;
       outline: none;
       width: 100%;
+    }
+    .filters-box input#searchInput {
+      padding-left: 38px;
     }
     .filters-box input:focus, .filters-box select:focus { border-color: var(--emerald); }
 
@@ -595,9 +649,9 @@
       justify-content: flex-end;
     }
     .icon-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
       display: grid;
       place-items: center;
       color: var(--muted);
@@ -641,6 +695,138 @@
     .m-values { display: flex; gap: 14px; font-size: 0.84rem; }
     .m-values span { display: block; font-size: 0.7rem; color: var(--muted); }
     .m-values strong { font-size: 0.92rem; }
+
+    /* ===== DEDICATED VIEW: TODAS AS DESPESAS DO MÊS ===== */
+    .all-exp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .all-exp-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .all-exp-title-group h2 {
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+    .all-exp-title-group p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .all-exp-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .mini-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+    .mini-stat span {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .mini-stat strong {
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+    .all-exp-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .filter-pill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .filter-pill.active {
+      background: var(--purple-soft);
+      border-color: rgba(139, 92, 246, 0.45);
+      color: #ddd6fe;
+    }
+    .group-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .group-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.025);
+      border-bottom: 1px solid var(--border);
+    }
+    .group-section-head-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .group-section-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .group-section-row:last-child { border-bottom: none; }
+    .group-row-info { min-width: 0; flex: 1; }
+    .group-row-title {
+      font-weight: 600;
+      font-size: 0.94rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .group-row-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .group-row-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .group-row-price {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .group-row-price strong { display: block; font-size: 0.94rem; }
+    .group-row-price span { display: block; font-size: 0.72rem; color: var(--muted); }
 
     /* Parcelamentos & Analytics */
     .section-grid {
@@ -730,6 +916,8 @@
       justify-content: space-between;
       font-size: 0.86rem;
       margin-bottom: 6px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     /* Modals */
@@ -830,16 +1018,65 @@
     }
 
     @media (max-width: 680px) {
-      .topbar { gap: 10px; }
-      .month-nav { order: 3; width: 100%; justify-content: space-between; }
+      /* Topbar mobile: Linha 1 = Marca + 3 pontinhos na direita; Linha 2 = Gerar Novo Mês 100%; Linha 3 = Seletor Mês 100% */
+      .topbar {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand {
+        grid-column: 1 / 2;
+        grid-row: 1;
+      }
+      .menu-wrap {
+        grid-column: 2 / 3;
+        grid-row: 1;
+        justify-self: end;
+      }
+      #generateNextBtn {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 14px;
+      }
+      .month-nav {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        width: 100%;
+        justify-content: space-between;
+      }
+
       .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       .kpi-card { padding: 13px 14px; }
       .kpi-value { font-size: 1.22rem; }
+
+      /* Abas fixas ocupando 100% sem precisar arrastar para o lado */
+      .tabs-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .tabs {
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .tab-btn {
+        padding: 10px 4px;
+        font-size: 0.82rem;
+      }
+      .tab-extra {
+        display: none;
+      }
+      #addExpenseBtn {
+        width: 100%;
+      }
+
       .filters-box { grid-template-columns: 1fr; }
       .table-wrap { display: none; }
       .mobile-list { display: flex; }
       .form-grid-2 { grid-template-columns: 1fr; }
-      .btn-next-label { display: none; }
+      .all-exp-summary { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -880,184 +1117,269 @@
 
   <!-- Main App -->
   <div id="appRoot" class="app-container hidden">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-icon">$</div>
-        <div>
-          <h1>Controle Financeiro</h1>
-          <div class="brand-sub">
-            <span>Gabriel & Sabrina</span>
-            <span id="syncPill" class="sync-pill"><span class="sync-dot"></span><span id="syncText">Sincronizado</span></span>
+
+    <!-- ===== VIEW 1: DASHBOARD PRINCIPAL ===== -->
+    <div id="dashboardView">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-icon">$</div>
+          <div>
+            <h1>Controle Financeiro</h1>
+            <div class="brand-sub">
+              <span>Gabriel & Sabrina</span>
+              <span id="syncPill" class="sync-pill"><span class="sync-dot"></span><span id="syncText">Sincronizado</span></span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="month-nav">
-        <button id="prevMonthBtn" title="Mês anterior" aria-label="Mês anterior">‹</button>
-        <div id="currentMonthLabel" class="month-label">Novembro 2026</div>
-        <button id="nextMonthBtn" title="Próximo mês" aria-label="Próximo mês">›</button>
-      </div>
+        <div class="month-nav">
+          <button id="prevMonthBtn" title="Mês anterior" aria-label="Mês anterior">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div id="currentMonthLabel" class="month-label">Novembro 2026</div>
+          <button id="nextMonthBtn" title="Próximo mês" aria-label="Próximo mês">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
 
-      <div class="top-actions">
-        <button id="generateNextBtn" class="btn-primary" title="Gerar próximo mês">
-          <span>+</span>
-          <span class="btn-next-label">Gerar Próximo Mês</span>
+        <button id="generateNextBtn" class="btn-primary" title="Gerar Novo Mês">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          <span>Gerar Novo Mês</span>
         </button>
-        <button id="menuBtn" class="menu-btn" aria-label="Mais opções">⋮</button>
-        <div id="dropdownMenu" class="dropdown hidden">
-          <div id="userEmailLabel" class="dropdown-user">Conectado</div>
-          <button id="exportCsvBtn">📊 Exportar CSV (Excel)</button>
-          <button id="exportJsonBtn">💾 Baixar Backup (JSON)</button>
-          <button id="importJsonBtn">📥 Restaurar Backup (JSON)</button>
-          <button id="logoutBtn" class="danger">🚪 Sair da conta</button>
-        </div>
-        <input id="importFileInput" type="file" accept=".json" class="hidden" />
-      </div>
-    </header>
 
-    <div id="rolloverBanner" class="banner hidden">
-      <div id="rolloverBannerText"></div>
-      <button id="closeBannerBtn" aria-label="Fechar">✕</button>
+        <div class="menu-wrap">
+          <button id="menuBtn" class="menu-btn" aria-label="Mais opções">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></svg>
+          </button>
+          <div id="dropdownMenu" class="dropdown hidden">
+            <div id="userEmailLabel" class="dropdown-user">Conectado</div>
+            <button id="exportCsvBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+              <span>Exportar CSV (Excel)</span>
+            </button>
+            <button id="exportJsonBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Baixar Backup (JSON)</span>
+            </button>
+            <button id="importJsonBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>Restaurar Backup (JSON)</span>
+            </button>
+            <button id="logoutBtn" class="danger">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span>Sair da conta</span>
+            </button>
+          </div>
+          <input id="importFileInput" type="file" accept=".json" class="hidden" />
+        </div>
+      </header>
+
+      <div id="rolloverBanner" class="banner hidden">
+        <div id="rolloverBannerText"></div>
+        <button id="closeBannerBtn" aria-label="Fechar">✕</button>
+      </div>
+
+      <!-- KPI Cards -->
+      <section class="kpi-grid">
+        <div class="kpi-card green">
+          <div class="kpi-top">
+            <span class="kpi-label">Receitas do Mês</span>
+            <button id="editIncomesBtn" class="kpi-edit">
+              <span>Editar</span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+            </button>
+          </div>
+          <div id="kpiIncome" class="kpi-value">R$ 0,00</div>
+          <div class="kpi-foot">
+            <span id="kpiIncomeSub">Gabriel + Sabrina</span>
+            <strong style="color:#34d399">100% da Renda</strong>
+          </div>
+        </div>
+
+        <div id="kpiExpensesCard" class="kpi-card purple clickable" role="button" tabindex="0" aria-label="Abrir lista completa de despesas do mês">
+          <div class="kpi-top">
+            <span class="kpi-label">Despesas Totais</span>
+            <span id="kpiExpPct" class="kpi-chip">0% da Renda</span>
+          </div>
+          <div id="kpiExpenses" class="kpi-value">R$ 0,00</div>
+          <div class="kpi-foot">
+            <span>Fixas: <strong id="kpiFixed">R$ 0,00</strong></span>
+            <span>Var: <strong id="kpiVar">R$ 0,00</strong></span>
+          </div>
+          <div class="kpi-link-hint">
+            <span>Ver lista completa</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+
+        <div class="kpi-card amber">
+          <div class="kpi-top">
+            <span class="kpi-label">Pago vs A Pagar</span>
+            <span id="kpiPaidPct" class="kpi-chip green">0%</span>
+          </div>
+          <div id="kpiPaid" class="kpi-value">R$ 0,00</div>
+          <div class="kpi-foot">
+            <span>Restam: <strong id="kpiOpen" class="amber">R$ 0,00</strong></span>
+          </div>
+          <div class="progress-track">
+            <div id="kpiPaidBar" class="progress-bar" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="kpi-card cyan">
+          <div class="kpi-top">
+            <span class="kpi-label">Sobra Projetada</span>
+            <span id="kpiSavePct" class="kpi-chip green">0% Poupado</span>
+          </div>
+          <div id="kpiLeftover" class="kpi-value green">R$ 0,00</div>
+          <div class="kpi-foot">
+            <span>Saldo no Banco Agora:</span>
+            <strong id="kpiBankNow">R$ 0,00</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs & Add Button -->
+      <div class="tabs-bar">
+        <div class="tabs" role="tablist">
+          <button class="tab-btn active" data-tab="lancamentos">Lançamentos</button>
+          <button class="tab-btn" data-tab="parcelamentos">Parcelamentos</button>
+          <button class="tab-btn" data-tab="analise">Análise<span class="tab-extra"> &amp; Gráficos</span></button>
+        </div>
+        <button id="addExpenseBtn" class="btn-white">+ Nova Despesa</button>
+      </div>
+
+      <!-- TAB 1: LANÇAMENTOS -->
+      <section id="tab-lancamentos">
+        <div class="filters-box">
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7.5"></circle>
+              <line x1="20" y1="20" x2="16.35" y2="16.35"></line>
+            </svg>
+            <input id="searchInput" type="search" placeholder="Buscar conta ou item..." />
+          </div>
+          <select id="groupFilter">
+            <option value="ALL">Todos os Grupos</option>
+            <option value="Casa">Casa</option>
+            <option value="Ivy">Ivy</option>
+            <option value="Cachorros">Cachorros</option>
+            <option value="Outros">Outros</option>
+          </select>
+          <select id="typeFilter">
+            <option value="ALL">Todos os Tipos</option>
+            <option value="Fixa">Fixas</option>
+            <option value="Variável">Variáveis</option>
+          </select>
+          <select id="statusFilter">
+            <option value="ALL">Todos os Status</option>
+            <option value="ABERTO">Em Aberto</option>
+            <option value="PAGO">Pagas</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Item / Descrição</th>
+                <th>Grupo</th>
+                <th>Tipo</th>
+                <th>Qtde / Parcela</th>
+                <th class="num">Previsto</th>
+                <th class="num">Valor Pago</th>
+                <th class="num">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="expensesTableBody"></tbody>
+          </table>
+        </div>
+
+        <div id="expensesMobileList" class="mobile-list"></div>
+      </section>
+
+      <!-- TAB 2: PARCELAMENTOS -->
+      <section id="tab-parcelamentos" class="hidden">
+        <div class="section-grid">
+          <div class="panel-card">
+            <h3><span>Parcelamentos Ativos neste Mês</span><span id="parcelTotalBadge" class="kpi-chip">R$ 0,00</span></h3>
+            <div id="parcelList"></div>
+          </div>
+          <div class="panel-card">
+            <h3>Projeção de Alívio no Orçamento</h3>
+            <div id="reliefTimeline"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: ANÁLISE -->
+      <section id="tab-analise" class="hidden">
+        <div class="section-grid">
+          <div class="panel-card">
+            <h3>Distribuição por Grupo</h3>
+            <div id="donutContainer" class="donut-layout"></div>
+          </div>
+          <div class="panel-card">
+            <h3>Fixas vs Variáveis</h3>
+            <div id="fixedVarContainer"></div>
+          </div>
+        </div>
+        <div class="panel-card" style="margin-top:16px">
+          <h3>Histórico Comparativo Mensal</h3>
+          <div id="historyContainer"></div>
+        </div>
+      </section>
     </div>
 
-    <!-- KPI Cards -->
-    <section class="kpi-grid">
-      <div class="kpi-card green">
-        <div class="kpi-top">
-          <span class="kpi-label">Receitas do Mês</span>
-          <button id="editIncomesBtn" class="kpi-edit">Editar ✎</button>
+    <!-- ===== VIEW 2: TODAS AS DESPESAS DO MÊS ===== -->
+    <div id="allExpensesView" class="hidden">
+      <div class="all-exp-header">
+        <div class="all-exp-title-group">
+          <button id="backToDashboardBtn" class="btn-ghost" aria-label="Voltar ao painel">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            <span>Voltar</span>
+          </button>
+          <div>
+            <h2 id="allExpTitle">Despesas do Mês</h2>
+            <p id="allExpSubtitle">0 itens lançados</p>
+          </div>
         </div>
-        <div id="kpiIncome" class="kpi-value">R$ 0,00</div>
-        <div class="kpi-foot">
-          <span id="kpiIncomeSub">Gabriel + Sabrina</span>
-          <strong style="color:#34d399">100% da Renda</strong>
+        <button id="addExpenseFromAllBtn" class="btn-primary">+ Nova Despesa</button>
+      </div>
+
+      <div class="all-exp-summary">
+        <div class="mini-stat">
+          <span>Total do Mês</span>
+          <strong id="allExpTotalVal">R$ 0,00</strong>
+        </div>
+        <div class="mini-stat">
+          <span>Já Pago</span>
+          <strong id="allExpPaidVal" style="color:#34d399">R$ 0,00</strong>
+        </div>
+        <div class="mini-stat">
+          <span>Ainda em Aberto</span>
+          <strong id="allExpOpenVal" style="color:#fbbf24">R$ 0,00</strong>
         </div>
       </div>
 
-      <div class="kpi-card purple">
-        <div class="kpi-top">
-          <span class="kpi-label">Despesas Totais</span>
-          <span id="kpiExpPct" class="kpi-chip">0% da Renda</span>
+      <div class="all-exp-controls">
+        <div class="pill-group" id="allExpFilterPills">
+          <button class="filter-pill active" data-filter="ALL">Todas</button>
+          <button class="filter-pill" data-filter="Fixa">Fixas</button>
+          <button class="filter-pill" data-filter="Variável">Variáveis</button>
+          <button class="filter-pill" data-filter="ABERTO">Em Aberto</button>
+          <button class="filter-pill" data-filter="PAGO">Pagas</button>
         </div>
-        <div id="kpiExpenses" class="kpi-value">R$ 0,00</div>
-        <div class="kpi-foot">
-          <span>Fixas: <strong id="kpiFixed">R$ 0,00</strong></span>
-          <span>Var: <strong id="kpiVar">R$ 0,00</strong></span>
-        </div>
-      </div>
-
-      <div class="kpi-card amber">
-        <div class="kpi-top">
-          <span class="kpi-label">Pago vs A Pagar</span>
-          <span id="kpiPaidPct" class="kpi-chip green">0%</span>
-        </div>
-        <div id="kpiPaid" class="kpi-value">R$ 0,00</div>
-        <div class="kpi-foot">
-          <span>Restam: <strong id="kpiOpen" class="amber">R$ 0,00</strong></span>
-        </div>
-        <div class="progress-track">
-          <div id="kpiPaidBar" class="progress-bar" style="width:0%"></div>
+        <div class="pill-group" id="allExpModePills">
+          <button class="filter-pill active" data-mode="grouped">Por Grupo</button>
+          <button class="filter-pill" data-mode="value">Maior Valor</button>
         </div>
       </div>
 
-      <div class="kpi-card cyan">
-        <div class="kpi-top">
-          <span class="kpi-label">Sobra Projetada</span>
-          <span id="kpiSavePct" class="kpi-chip green">0% Poupado</span>
-        </div>
-        <div id="kpiLeftover" class="kpi-value green">R$ 0,00</div>
-        <div class="kpi-foot">
-          <span>Saldo no Banco Agora:</span>
-          <strong id="kpiBankNow">R$ 0,00</strong>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tabs & Add Button -->
-    <div class="tabs-bar">
-      <div class="tabs" role="tablist">
-        <button class="tab-btn active" data-tab="lancamentos">Lançamentos</button>
-        <button class="tab-btn" data-tab="parcelamentos">Parcelamentos</button>
-        <button class="tab-btn" data-tab="analise">Análise & Gráficos</button>
-      </div>
-      <button id="addExpenseBtn" class="btn-white">+ Nova Despesa</button>
+      <div id="allExpensesContent"></div>
     </div>
 
-    <!-- TAB 1: LANÇAMENTOS -->
-    <section id="tab-lancamentos">
-      <div class="filters-box">
-        <input id="searchInput" type="search" placeholder="🔍 Buscar conta ou item..." />
-        <select id="groupFilter">
-          <option value="ALL">Todos os Grupos</option>
-          <option value="Casa">Casa</option>
-          <option value="Ivy">Ivy</option>
-          <option value="Cachorros">Cachorros</option>
-          <option value="Outros">Outros</option>
-        </select>
-        <select id="typeFilter">
-          <option value="ALL">Todos os Tipos</option>
-          <option value="Fixa">Fixas</option>
-          <option value="Variável">Variáveis</option>
-        </select>
-        <select id="statusFilter">
-          <option value="ALL">Todos os Status</option>
-          <option value="ABERTO">Em Aberto</option>
-          <option value="PAGO">Pagas</option>
-        </select>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Status</th>
-              <th>Item / Descrição</th>
-              <th>Grupo</th>
-              <th>Tipo</th>
-              <th>Qtde / Parcela</th>
-              <th class="num">Previsto</th>
-              <th class="num">Valor Pago</th>
-              <th class="num">Ações</th>
-            </tr>
-          </thead>
-          <tbody id="expensesTableBody"></tbody>
-        </table>
-      </div>
-
-      <div id="expensesMobileList" class="mobile-list"></div>
-    </section>
-
-    <!-- TAB 2: PARCELAMENTOS -->
-    <section id="tab-parcelamentos" class="hidden">
-      <div class="section-grid">
-        <div class="panel-card">
-          <h3><span>Parcelamentos Ativos neste Mês</span><span id="parcelTotalBadge" class="kpi-chip">R$ 0,00</span></h3>
-          <div id="parcelList"></div>
-        </div>
-        <div class="panel-card">
-          <h3>Projeção de Alívio no Orçamento</h3>
-          <div id="reliefTimeline"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB 3: ANÁLISE -->
-    <section id="tab-analise" class="hidden">
-      <div class="section-grid">
-        <div class="panel-card">
-          <h3>Distribuição por Grupo</h3>
-          <div id="donutContainer" class="donut-layout"></div>
-        </div>
-        <div class="panel-card">
-          <h3>Fixas vs Variáveis</h3>
-          <div id="fixedVarContainer"></div>
-        </div>
-      </div>
-      <div class="panel-card" style="margin-top:16px">
-        <h3>Histórico Comparativo Mensal</h3>
-        <div id="historyContainer"></div>
-      </div>
-    </section>
   </div>
 
   <!-- MODAL: DESPESA -->
@@ -1168,14 +1490,17 @@
       enableIndexedDbPersistence
     } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
-    // Registrar Service Worker do PWA
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
     }
 
-    // ===== DADOS INICIAIS EXATOS DE NOVEMBRO/2026 (DA PLANILHA) =====
+    // Ícones SVG reutilizáveis (limpos e uniformes no Android, iOS e PC)
+    const ICON_EDIT = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>`;
+    const ICON_TRASH = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`;
+
+    // ===== DADOS INICIAIS DE NOVEMBRO/2026 =====
     function buildInitialNovember() {
       return {
         id: '2026-11',
@@ -1185,7 +1510,6 @@
           { id: 'inc-3', name: 'Sabrina', amount: 4100 }
         ],
         expenses: [
-          // CASA - FIXAS
           { id: 'e-01', name: 'Luz', group: 'Casa', type: 'Fixa', qty: '-', planned: 510.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-02', name: 'Água', group: 'Casa', type: 'Fixa', qty: '-', planned: 90.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-03', name: 'Net', group: 'Casa', type: 'Fixa', qty: '-', planned: 179.93, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
@@ -1194,7 +1518,6 @@
           { id: 'e-06', name: 'Carne', group: 'Casa', type: 'Fixa', qty: '4', planned: 1120.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-07', name: 'Verdura', group: 'Casa', type: 'Fixa', qty: '3', planned: 270.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-08', name: 'Água Galão', group: 'Casa', type: 'Fixa', qty: '6', planned: 72.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          // IVY - FIXAS
           { id: 'e-09', name: 'Leite', group: 'Ivy', type: 'Fixa', qty: '4', planned: 269.95, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-10', name: 'Fralda', group: 'Ivy', type: 'Fixa', qty: '-', planned: 150.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-11', name: 'Sabão', group: 'Ivy', type: 'Fixa', qty: '1', planned: 40.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
@@ -1202,13 +1525,11 @@
           { id: 'e-13', name: 'Sabonete', group: 'Ivy', type: 'Fixa', qty: '-', planned: 35.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-14', name: 'Lenço', group: 'Ivy', type: 'Fixa', qty: '-', planned: 40.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-15', name: 'Creme', group: 'Ivy', type: 'Fixa', qty: '-', planned: 37.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          // CACHORROS - FIXAS
           { id: 'e-16', name: 'Banho', group: 'Cachorros', type: 'Fixa', qty: '-', planned: 180.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-17', name: 'Ração', group: 'Cachorros', type: 'Fixa', qty: '1', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-18', name: 'Tapete', group: 'Cachorros', type: 'Fixa', qty: '1', planned: 90.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-19', name: 'Biscoito', group: 'Cachorros', type: 'Fixa', qty: '3', planned: 150.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-20', name: 'Caldo', group: 'Cachorros', type: 'Fixa', qty: '1', planned: 25.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          // CASA - VARIÁVEIS & PARCELADOS
           { id: 'e-21', name: 'GR Pai', group: 'Casa', type: 'Variável', qty: '-', planned: 179.00, paid: 0, status: 'ABERTO', installmentCurrent: 9, installmentTotal: 10 },
           { id: 'e-22', name: 'Carro Pai', group: 'Casa', type: 'Variável', qty: '-', planned: 290.00, paid: 0, status: 'ABERTO', installmentCurrent: 8, installmentTotal: 8 },
           { id: 'e-23', name: 'Cirurgia Kiara', group: 'Casa', type: 'Variável', qty: '-', planned: 330.00, paid: 0, status: 'ABERTO', installmentCurrent: 4, installmentTotal: 10 },
@@ -1216,7 +1537,6 @@
           { id: 'e-25', name: 'Cabelo + Unha', group: 'Casa', type: 'Variável', qty: '-', planned: 200.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-26', name: 'Gás', group: 'Casa', type: 'Variável', qty: '-', planned: 0.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-27', name: 'iFood', group: 'Casa', type: 'Variável', qty: '-', planned: 0.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          // IVY - VARIÁVEIS
           { id: 'e-28', name: 'Brinquedo', group: 'Ivy', type: 'Variável', qty: '-', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
           { id: 'e-29', name: 'Roupa', group: 'Ivy', type: 'Variável', qty: '-', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null }
         ],
@@ -1229,6 +1549,9 @@
       months: {},
       currentMonth: '2026-11',
       activeTab: 'lancamentos',
+      currentView: 'dashboard', // 'dashboard' | 'all-expenses'
+      allExpFilter: 'ALL',
+      allExpMode: 'grouped', // 'grouped' | 'value'
       user: null,
       unsubSnapshot: null,
       seeding: false
@@ -1436,6 +1759,25 @@
       };
     }
 
+    // ===== TROCA DE TELA (DASHBOARD ↔ LISTA COMPLETA DE DESPESAS) =====
+    function setView(viewName) {
+      state.currentView = viewName;
+      $('dashboardView').classList.toggle('hidden', viewName !== 'dashboard');
+      $('allExpensesView').classList.toggle('hidden', viewName !== 'all-expenses');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderAll();
+    }
+
+    $('kpiExpensesCard').addEventListener('click', () => setView('all-expenses'));
+    $('kpiExpensesCard').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setView('all-expenses');
+      }
+    });
+    $('backToDashboardBtn').addEventListener('click', () => setView('dashboard'));
+    $('addExpenseFromAllBtn').addEventListener('click', () => openExpenseModal(null));
+
     // ===== CÁLCULOS =====
     function calcMetrics(m) {
       const totalIncome = (m.incomes || []).reduce((s, i) => s + (Number(i.amount) || 0), 0);
@@ -1491,6 +1833,7 @@
       renderExpensesList(m);
       renderParcelamentos(m);
       renderAnalytics(m, k);
+      renderAllExpensesView(m, k);
     }
 
     function renderExpensesList(m) {
@@ -1538,8 +1881,8 @@
             <td class="num ${isPaid ? '' : 'muted'}">${fmtBRL(paidDisplay)}</td>
             <td class="num">
               <div class="row-actions">
-                <button class="icon-btn" data-action="edit" data-id="${e.id}" title="Editar">✎</button>
-                <button class="icon-btn del" data-action="delete" data-id="${e.id}" title="Excluir">🗑</button>
+                <button class="icon-btn" data-action="edit" data-id="${e.id}" title="Editar">${ICON_EDIT}</button>
+                <button class="icon-btn del" data-action="delete" data-id="${e.id}" title="Excluir">${ICON_TRASH}</button>
               </div>
             </td>
           </tr>
@@ -1569,10 +1912,112 @@
                 <div><span>Pago</span><strong style="color:${isPaid ? '#34d399' : '#94a3b8'}">${fmtBRL(paidDisplay)}</strong></div>
               </div>
               <div class="row-actions">
-                <button class="icon-btn" data-action="edit" data-id="${e.id}" aria-label="Editar">✎</button>
-                <button class="icon-btn del" data-action="delete" data-id="${e.id}" aria-label="Excluir">🗑</button>
+                <button class="icon-btn" data-action="edit" data-id="${e.id}" aria-label="Editar">${ICON_EDIT}</button>
+                <button class="icon-btn del" data-action="delete" data-id="${e.id}" aria-label="Excluir">${ICON_TRASH}</button>
               </div>
             </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderAllExpensesView(m, k) {
+      const all = m.expenses || [];
+      $('allExpTitle').textContent = `Despesas — ${formatMonthId(state.currentMonth)}`;
+      $('allExpSubtitle').textContent = `${all.length} despesa(s) no mês`;
+      $('allExpTotalVal').textContent = fmtBRL(k.totalExpenses);
+      $('allExpPaidVal').textContent = fmtBRL(k.totalPaid);
+      $('allExpOpenVal').textContent = fmtBRL(k.totalOpen);
+
+      const f = state.allExpFilter;
+      const list = all.filter((e) => {
+        if (f === 'Fixa' || f === 'Variável') return e.type === f;
+        if (f === 'ABERTO' || f === 'PAGO') return e.status === f;
+        return true;
+      });
+
+      const container = $('allExpensesContent');
+      if (!list.length) {
+        container.innerHTML = `<div class="panel-card empty-state">Nenhuma despesa encontrada neste filtro.</div>`;
+        return;
+      }
+
+      const renderRow = (e) => {
+        const isPaid = e.status === 'PAGO';
+        const effective = isPaid && Number(e.paid) > 0 ? Number(e.paid) : Number(e.planned || 0);
+        const parcelInfo = e.installmentTotal ? `${String(e.installmentCurrent).padStart(2, '0')}/${String(e.installmentTotal).padStart(2, '0')}` : '';
+        const qtyInfo = !parcelInfo && e.qty && e.qty !== '-' ? `Qtde: ${e.qty}` : '';
+        return `
+          <div class="group-section-row">
+            <div class="group-row-info">
+              <div class="group-row-title">
+                <span>${escapeHtml(e.name)}</span>
+                ${parcelInfo ? `<span class="parcel-tag">${parcelInfo}</span>` : ''}
+              </div>
+              <div class="group-row-sub">
+                ${state.allExpMode === 'value' ? `${escapeHtml(e.group)} · ` : ''}${escapeHtml(e.type)}${qtyInfo ? ` · ${escapeHtml(qtyInfo)}` : ''}
+              </div>
+            </div>
+            <div class="group-row-right">
+              <div class="group-row-price">
+                <strong>${fmtBRL(effective)}</strong>
+                <span>${isPaid ? 'Pago' : 'Previsto'}</span>
+              </div>
+              <button class="status-pill ${isPaid ? 'pago' : 'aberto'}" data-action="toggle" data-id="${e.id}">
+                ${isPaid ? 'PAGO' : 'ABERTO'}
+              </button>
+              <button class="icon-btn" data-action="edit" data-id="${e.id}" aria-label="Editar">${ICON_EDIT}</button>
+            </div>
+          </div>
+        `;
+      };
+
+      if (state.allExpMode === 'value') {
+        const sorted = [...list].sort((a, b) => (Number(b.planned) || 0) - (Number(a.planned) || 0));
+        const sub = sorted.reduce((s, e) => s + (e.status === 'PAGO' && Number(e.paid) > 0 ? Number(e.paid) : Number(e.planned || 0)), 0);
+        container.innerHTML = `
+          <div class="group-section">
+            <div class="group-section-head">
+              <div class="group-section-head-left">
+                <strong>Todas ordenadas por valor</strong>
+                <span class="muted" style="font-size:0.8rem">(${sorted.length} itens)</span>
+              </div>
+              <strong>${fmtBRL(sub)}</strong>
+            </div>
+            ${sorted.map(renderRow).join('')}
+          </div>
+        `;
+        return;
+      }
+
+      // Modo agrupado por categoria (Casa, Ivy, Cachorros, Outros)
+      const order = ['Casa', 'Ivy', 'Cachorros', 'Outros'];
+      const groups = {};
+      for (const e of list) {
+        const g = e.group || 'Outros';
+        if (!groups[g]) groups[g] = [];
+        groups[g].push(e);
+      }
+
+      const groupNames = Object.keys(groups).sort((a, b) => {
+        const ia = order.indexOf(a);
+        const ib = order.indexOf(b);
+        return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+      });
+
+      container.innerHTML = groupNames.map((gName) => {
+        const items = groups[gName];
+        const sub = items.reduce((s, e) => s + (e.status === 'PAGO' && Number(e.paid) > 0 ? Number(e.paid) : Number(e.planned || 0)), 0);
+        return `
+          <div class="group-section">
+            <div class="group-section-head">
+              <div class="group-section-head-left">
+                <span class="group-badge group-${escapeHtml(gName)}">${escapeHtml(gName)}</span>
+                <span class="muted" style="font-size:0.8rem">${items.length} ${items.length === 1 ? 'item' : 'itens'}</span>
+              </div>
+              <strong>${fmtBRL(sub)}</strong>
+            </div>
+            ${items.map(renderRow).join('')}
           </div>
         `;
       }).join('');
@@ -1612,7 +2057,6 @@
         `;
       }).join('');
 
-      // Agrupar alívio por mês de liberação (mês seguinte à última parcela)
       const reliefMap = {};
       for (const p of parcels) {
         const cur = Number(p.installmentCurrent) || 1;
@@ -1643,7 +2087,6 @@
     }
 
     function renderAnalytics(m, k) {
-      // Donut por Grupo
       const colors = { Casa: '#3b82f6', Ivy: '#8b5cf6', Cachorros: '#06b6d4', Outros: '#94a3b8' };
       const groups = {};
       for (const e of (m.expenses || [])) {
@@ -1690,7 +2133,6 @@
         `;
       }
 
-      // Fixas vs Variáveis
       const fPct = k.totalExpenses > 0 ? (k.totalFixed / k.totalExpenses) * 100 : 0;
       const vPct = k.totalExpenses > 0 ? (k.totalVar / k.totalExpenses) * 100 : 0;
       $('fixedVarContainer').innerHTML = `
@@ -1708,7 +2150,6 @@
         </div>
       `;
 
-      // Histórico mensal
       const keys = Object.keys(state.months).sort();
       const maxVal = Math.max(1, ...keys.map((id) => {
         const mm = calcMetrics(state.months[id]);
@@ -1768,6 +2209,26 @@
 
     $('expensesTableBody').addEventListener('click', handleExpenseAction);
     $('expensesMobileList').addEventListener('click', handleExpenseAction);
+    $('allExpensesContent').addEventListener('click', handleExpenseAction);
+
+    // Filtros da tela "Todas as Despesas do Mês"
+    $('allExpFilterPills').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-filter]');
+      if (!btn) return;
+      state.allExpFilter = btn.dataset.filter;
+      $('allExpFilterPills').querySelectorAll('.filter-pill').forEach((b) => b.classList.toggle('active', b === btn));
+      const m = getCurrentMonthData();
+      renderAllExpensesView(m, calcMetrics(m));
+    });
+
+    $('allExpModePills').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-mode]');
+      if (!btn) return;
+      state.allExpMode = btn.dataset.mode;
+      $('allExpModePills').querySelectorAll('.filter-pill').forEach((b) => b.classList.toggle('active', b === btn));
+      const m = getCurrentMonthData();
+      renderAllExpensesView(m, calcMetrics(m));
+    });
 
     // ===== MODAL DESPESA =====
     function openExpenseModal(item = null) {
@@ -1890,7 +2351,7 @@
         if (e.installmentTotal) {
           if (e.installmentCurrent >= e.installmentTotal) {
             finished.push(e);
-            continue; // Parcelamento concluído!
+            continue;
           }
           nextExpenses.push({
             ...e,
@@ -1900,7 +2361,6 @@
             status: 'ABERTO'
           });
         } else {
-          // Mantém fixas e variáveis recorrentes com status ABERTO
           nextExpenses.push({
             ...e,
             id: uid('e'),
@@ -1922,7 +2382,7 @@
       if (finished.length) {
         const freed = finished.reduce((s, x) => s + (Number(x.planned) || 0), 0);
         const names = finished.map((x) => x.name).join(', ');
-        $('rolloverBannerText').innerHTML = `🎉 <strong>Alívio no orçamento em ${formatMonthId(nextId)}:</strong> ${escapeHtml(names)} encerrado(s), liberando <strong>+${fmtBRL(freed)}/mês</strong>!`;
+        $('rolloverBannerText').innerHTML = `<strong>Alívio no orçamento em ${formatMonthId(nextId)}:</strong> ${escapeHtml(names)} encerrado(s), liberando <strong>+${fmtBRL(freed)}/mês</strong>!`;
         $('rolloverBanner').classList.remove('hidden');
       }
     });
@@ -1948,7 +2408,7 @@
         state.currentMonth = keys[idx + 1];
         renderAll();
       } else {
-        showToast('Use "+ Gerar Próximo Mês" para criar o mês seguinte.');
+        showToast('Use "+ Gerar Novo Mês" para criar o mês seguinte.');
       }
     });
 
