@@ -609,13 +609,17 @@
     .owner-badge {
       display: inline-flex;
       align-items: center;
+      gap: 4px;
       padding: 2px 8px;
       border-radius: 999px;
       font-size: 0.71rem;
       font-weight: 700;
+      white-space: nowrap;
     }
-    .owner-Gabriel { background: rgba(59, 130, 246, 0.16); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.28); }
-    .owner-Sabrina { background: var(--pink-soft); color: #f9a8d4; border: 1px solid rgba(236, 72, 153, 0.3); }
+    .owner-badge svg { flex-shrink: 0; }
+    .owner-Gabriel { background: rgba(59, 130, 246, 0.16); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+    .owner-Sabrina { background: var(--pink-soft); color: #f9a8d4; border: 1px solid rgba(236, 72, 153, 0.32); }
+    .owner-Compartilhado { background: rgba(148, 163, 184, 0.14); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.28); }
 
     .due-badge {
       display: inline-flex;
@@ -1609,7 +1613,7 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
             </button>
           </div>
-          <div id="kpiIncome" class="kpi-value">R$ 0,00</div>
+          <div id="kpiIncome" class="kpi-value">R$ •••••</div>
           <div class="kpi-foot">
             <span id="kpiIncomeSub">Gabriel + Sabrina</span>
             <strong style="color:#34d399">100% da Renda</strong>
@@ -1621,10 +1625,10 @@
             <span class="kpi-label">Despesas Totais</span>
             <span id="kpiExpPct" class="kpi-chip">0% da Renda</span>
           </div>
-          <div id="kpiExpenses" class="kpi-value">R$ 0,00</div>
+          <div id="kpiExpenses" class="kpi-value">R$ •••••</div>
           <div class="kpi-foot">
-            <span>Fixas: <strong id="kpiFixed">R$ 0,00</strong></span>
-            <span>Var: <strong id="kpiVar">R$ 0,00</strong></span>
+            <span>Fixas: <strong id="kpiFixed">R$ •••••</strong></span>
+            <span>Var: <strong id="kpiVar">R$ •••••</strong></span>
           </div>
           <div class="kpi-link-hint">
             <span>Ver lista completa</span>
@@ -1637,9 +1641,9 @@
             <span class="kpi-label">Pago vs A Pagar</span>
             <span id="kpiPaidPct" class="kpi-chip green">0%</span>
           </div>
-          <div id="kpiPaid" class="kpi-value">R$ 0,00</div>
+          <div id="kpiPaid" class="kpi-value">R$ •••••</div>
           <div class="kpi-foot">
-            <span>Restam: <strong id="kpiOpen" class="amber">R$ 0,00</strong></span>
+            <span>Restam: <strong id="kpiOpen" class="amber">R$ •••••</strong></span>
           </div>
           <div class="progress-track">
             <div id="kpiPaidBar" class="progress-bar" style="width:0%"></div>
@@ -1651,7 +1655,7 @@
             <span class="kpi-label">Sobra Projetada</span>
             <span id="kpiSavePct" class="kpi-chip green">0% Poupado</span>
           </div>
-          <div id="kpiLeftover" class="kpi-value green">R$ 0,00</div>
+          <div id="kpiLeftover" class="kpi-value green">R$ •••••</div>
         </div>
       </section>
 
@@ -1730,7 +1734,7 @@
       <section id="tab-parcelamentos" class="hidden">
         <div class="section-grid">
           <div class="panel-card">
-            <h3><span>Parcelamentos Ativos neste Mês</span><span id="parcelTotalBadge" class="kpi-chip">R$ 0,00</span></h3>
+            <h3><span>Parcelamentos Ativos neste Mês</span><span id="parcelTotalBadge" class="kpi-chip">R$ •••••</span></h3>
             <div id="parcelList"></div>
           </div>
           <div class="panel-card">
@@ -1748,7 +1752,7 @@
               <span class="kpi-label">Total nas Caixinhas</span>
               <span id="goalsCountChip" class="kpi-chip green">0 metas</span>
             </div>
-            <div id="goalsTotalSaved" class="kpi-value green">R$ 0,00</div>
+            <div id="goalsTotalSaved" class="kpi-value green">R$ •••••</div>
             <div class="kpi-foot"><span>Acumulado de vocês dois</span></div>
           </div>
           <div class="kpi-card cyan">
@@ -1756,7 +1760,7 @@
               <span class="kpi-label">Sobra Disponível do Mês</span>
               <span id="goalsMonthTag" class="kpi-chip">Novembro</span>
             </div>
-            <div id="goalsMonthLeftover" class="kpi-value">R$ 0,00</div>
+            <div id="goalsMonthLeftover" class="kpi-value">R$ •••••</div>
             <div class="kpi-foot"><span>Dê um destino para a sobra antes de gastar</span></div>
           </div>
         </div>
@@ -1813,15 +1817,15 @@
       <div class="all-exp-summary">
         <div class="mini-stat">
           <span>Total do Mês</span>
-          <strong id="allExpTotalVal">R$ 0,00</strong>
+          <strong id="allExpTotalVal">R$ •••••</strong>
         </div>
         <div class="mini-stat">
           <span>Já Pago</span>
-          <strong id="allExpPaidVal" style="color:#34d399">R$ 0,00</strong>
+          <strong id="allExpPaidVal" style="color:#34d399">R$ •••••</strong>
         </div>
         <div class="mini-stat">
           <span>Ainda em Aberto</span>
-          <strong id="allExpOpenVal" style="color:#fbbf24">R$ 0,00</strong>
+          <strong id="allExpOpenVal" style="color:#fbbf24">R$ •••••</strong>
         </div>
       </div>
 
@@ -2010,7 +2014,7 @@
           <span class="muted" style="font-size:0.8rem">Acumulado no mês</span>
           <strong id="quickAddBudgetInfo" style="font-size:0.82rem"></strong>
         </div>
-        <div id="quickAddCurrentVal" style="font-size:1.35rem;font-weight:800;color:#34d399">R$ 0,00</div>
+        <div id="quickAddCurrentVal" style="font-size:1.35rem;font-weight:800;color:#34d399">R$ •••••</div>
         <div class="progress-track" style="height:8px">
           <div id="quickAddBar" class="progress-bar" style="width:0%"></div>
         </div>
@@ -2165,6 +2169,8 @@
     const ICON_EYE_OPEN = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
     const ICON_EYE_OFF = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>`;
     const ICON_CAL = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+    const ICON_USER = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+    const ICON_USERS = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`;
 
     const GOALS_DOC_ID = '_metas';
 
@@ -2221,7 +2227,7 @@
       currentView: 'dashboard',
       allExpFilter: 'ALL',
       allExpMode: 'grouped',
-      privacyMode: localStorage.getItem('financas_privacy') === '1',
+      privacyMode: true,
       selectedGoalColor: '#10b981',
       user: null,
       unsubSnapshot: null,
@@ -2286,19 +2292,20 @@
         .replace(/"/g, '&quot;');
     }
 
-    // ===== MODO PRIVACIDADE =====
+    // ===== MODO PRIVACIDADE (SEMPRE INICIA OCULTO AO ABRIR O APP) =====
     function updatePrivacyUI() {
       $('privacyIconWrap').innerHTML = state.privacyMode ? ICON_EYE_OFF : ICON_EYE_OPEN;
       $('privacyBtn').classList.toggle('privacy-on', state.privacyMode);
+      $('privacyBtn').title = state.privacyMode ? 'Mostrar valores' : 'Ocultar valores';
+      $('privacyBtn').setAttribute('aria-label', state.privacyMode ? 'Mostrar valores' : 'Ocultar valores');
     }
     updatePrivacyUI();
 
     $('privacyBtn').addEventListener('click', () => {
       state.privacyMode = !state.privacyMode;
-      localStorage.setItem('financas_privacy', state.privacyMode ? '1' : '0');
       updatePrivacyUI();
       renderAll();
-      showToast(state.privacyMode ? 'Modo privacidade ativado' : 'Valores visíveis novamente');
+      showToast(state.privacyMode ? 'Valores ocultos' : 'Valores visíveis');
     });
 
     // ===== VENCIMENTOS & ALERTAS =====
@@ -2342,8 +2349,8 @@
 
     function renderOwnerBadge(e) {
       const owner = e.owner || 'Compartilhado';
-      if (owner === 'Compartilhado') return '';
-      return `<span class="owner-badge owner-${escapeHtml(owner)}">${escapeHtml(owner)}</span>`;
+      const icon = owner === 'Compartilhado' ? ICON_USERS : ICON_USER;
+      return `<span class="owner-badge owner-${escapeHtml(owner)}" title="Responsável pelo pagamento">${icon}${escapeHtml(owner)}</span>`;
     }
 
     // ===== VERIFICAR CONFIG FIREBASE =====
@@ -2924,7 +2931,7 @@
         return `
           <div class="parcel-item">
             <div class="parcel-head">
-              <span>${escapeHtml(p.name)}</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap">${escapeHtml(p.name)} ${renderOwnerBadge(p)}</span>
               <span>${fmtBRL(p.planned)}/mês</span>
             </div>
             <div class="parcel-sub">
@@ -3292,7 +3299,7 @@
       item.paid = Number(((Number(item.paid) || 0) + addVal).toFixed(2));
       if (markPaid) item.status = 'PAGO';
 
-      saveMonth(state.currentMonth, m, `+${fmtBRLRaw(addVal)} somado em ${item.name}!`);
+      saveMonth(state.currentMonth, m, `${state.privacyMode ? 'Gasto' : '+' + fmtBRLRaw(addVal)} somado em ${item.name}!`);
       $('quickAddAmount').value = '';
       $('quickAddNote').value = '';
       renderQuickAddModalBody(item);
