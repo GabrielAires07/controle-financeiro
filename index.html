@@ -972,6 +972,161 @@
       margin-top: 18px;
     }
 
+    /* ===== SIMPLIFIED EXPENSE FORM ===== */
+    .field-hint {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    .seg-control {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 4px;
+    }
+    .seg-btn {
+      padding: 9px 10px;
+      border-radius: 9px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-align: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .seg-btn.active[data-val="ABERTO"] {
+      background: var(--amber-soft);
+      color: #fbbf24;
+      box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.35);
+    }
+    .seg-btn.active[data-val="PAGO"] {
+      background: var(--emerald-soft);
+      color: #34d399;
+      box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.4);
+    }
+    .seg-btn.active.mode-btn {
+      background: var(--purple-soft);
+      color: #ddd6fe;
+      box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.4);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 14px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    .toggle-row-text strong {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    .toggle-row-text span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .switch-input {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 42px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.28);
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .switch-input::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.2s;
+    }
+    .switch-input:checked {
+      background: var(--purple);
+    }
+    .switch-input:checked::after {
+      transform: translateX(18px);
+    }
+
+    .sub-panel {
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px;
+      margin-bottom: 14px;
+    }
+    .sub-panel.purple-tint {
+      border-color: rgba(139, 92, 246, 0.3);
+      background: rgba(139, 92, 246, 0.06);
+    }
+    .sub-panel.emerald-tint {
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.06);
+    }
+
+    .info-callout {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      padding: 9px 11px;
+      border-radius: 10px;
+      background: rgba(148, 163, 184, 0.09);
+      border: 1px solid var(--border);
+      font-size: 0.77rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+      margin-top: 8px;
+    }
+    .info-callout svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: #a5b4fc;
+    }
+
+    .more-toggle-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 13px;
+      border-radius: 12px;
+      background: var(--bg-elev);
+      border: 1px dashed var(--border-strong);
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .more-toggle-btn:hover { color: var(--text); border-color: var(--muted); }
+    .more-toggle-btn svg { transition: transform 0.2s; }
+    .more-toggle-btn.open svg { transform: rotate(180deg); }
+
+    .item-note {
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.35;
+    }
+
     .income-row {
       display: grid;
       grid-template-columns: 1.4fr 1fr auto;
@@ -1388,7 +1543,7 @@
 
   </div>
 
-  <!-- MODAL: DESPESA -->
+  <!-- MODAL: DESPESA (SIMPLIFICADO E INTUITIVO) -->
   <div id="expenseModal" class="modal-backdrop hidden">
     <div class="modal">
       <div class="modal-head">
@@ -1397,10 +1552,20 @@
       </div>
       <form id="expenseForm">
         <input type="hidden" id="expId" />
+        <input type="hidden" id="expStatus" value="ABERTO" />
+
+        <!-- 1. Essencial -->
         <div class="field">
           <label for="expName">Descrição / Item</label>
           <input id="expName" type="text" placeholder="Ex.: Luz, Mercado, Fralda..." required />
         </div>
+
+        <div class="field">
+          <label id="expPlannedLabel" for="expPlanned">Valor no mês (R$)</label>
+          <input id="expPlanned" type="number" step="0.01" min="0" placeholder="0,00" required />
+          <p id="expPlannedHint" class="field-hint">Valor fixo ou estimado desta conta neste mês.</p>
+        </div>
+
         <div class="form-grid-2">
           <div class="field">
             <label for="expGroup">Grupo</label>
@@ -1419,39 +1584,90 @@
             </select>
           </div>
         </div>
-        <div class="form-grid-2">
-          <div class="field">
-            <label for="expPlanned">Valor Previsto (R$)</label>
-            <input id="expPlanned" type="number" step="0.01" min="0" required />
-          </div>
-          <div class="field">
-            <label for="expPaid">Valor Pago (R$)</label>
-            <input id="expPaid" type="number" step="0.01" min="0" value="0" />
+
+        <!-- 2. Situação do pagamento -->
+        <div class="field">
+          <label>Situação do pagamento</label>
+          <div class="seg-control" id="expStatusSeg">
+            <button type="button" class="seg-btn active" data-val="ABERTO">Em Aberto</button>
+            <button type="button" class="seg-btn" data-val="PAGO">Já Pago</button>
           </div>
         </div>
-        <div class="form-grid-2">
+
+        <!-- Aparece só quando marcado como Já Pago -->
+        <div id="paidAmountBox" class="sub-panel emerald-tint hidden">
+          <div class="field" style="margin-bottom:0">
+            <label for="expPaid">Quanto saiu na prática? (R$)</label>
+            <input id="expPaid" type="number" step="0.01" min="0" placeholder="Mesmo valor previsto" />
+            <p class="field-hint">Se a conta veio diferente do previsto (ex.: conta de luz), informe o valor real pago aqui. Se deixar em branco, usa o valor acima.</p>
+          </div>
+        </div>
+
+        <!-- 3. Compra Parcelada (opcional) -->
+        <label class="toggle-row" for="expIsInstallment">
+          <div class="toggle-row-text">
+            <strong>Compra parcelada</strong>
+            <span>Ative para controlar parcelas e encerramento automático</span>
+          </div>
+          <input id="expIsInstallment" type="checkbox" class="switch-input" />
+        </label>
+
+        <div id="installmentBox" class="sub-panel purple-tint hidden">
+          <div class="field" style="margin-bottom:10px">
+            <label>Como prefere informar o valor?</label>
+            <div class="seg-control" id="instValueModeSeg">
+              <button type="button" class="seg-btn mode-btn active" data-mode="parcel">Valor de 1 parcela</button>
+              <button type="button" class="seg-btn mode-btn" data-mode="total">Dividir valor total</button>
+            </div>
+          </div>
+
+          <div id="instTotalCalcField" class="field hidden" style="margin-bottom:10px">
+            <label for="expTotalPurchase">Valor total da compra (R$)</label>
+            <input id="expTotalPurchase" type="number" step="0.01" min="0" placeholder="Ex.: 1200,00" />
+            <p class="field-hint">O app divide automaticamente pelo total de parcelas e preenche o valor mensal acima.</p>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="field" style="margin-bottom:0">
+              <label for="expInstCur">Parcela atual</label>
+              <input id="expInstCur" type="number" min="1" placeholder="Ex.: 1" />
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label for="expInstTot">Total de parcelas</label>
+              <input id="expInstTot" type="number" min="2" placeholder="Ex.: 10" />
+            </div>
+          </div>
+
+          <div id="installmentLiveInfo" class="info-callout">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span id="installmentLiveText">Informe sempre o valor de <strong>1 parcela mensal</strong> (não o total). Ao gerar o próximo mês, o app avança a parcela e remove sozinho quando acabar.</span>
+          </div>
+        </div>
+
+        <!-- 4. Mais detalhes (recolhido por padrão) -->
+        <button id="toggleMoreDetailsBtn" type="button" class="more-toggle-btn">
+          <span>Mais opções (pagamento parcial, quantidade, observação)</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+
+        <div id="moreDetailsBox" class="sub-panel hidden">
+          <div id="partialPaidField" class="field">
+            <label for="expPartialPaid">Já gastou uma parte? — Pagamento parcial (R$)</label>
+            <input id="expPartialPaid" type="number" step="0.01" min="0" placeholder="0,00" />
+            <p class="field-hint">Útil para gastos fracionados no mês (ex.: já gastou R$ 400 de R$ 1.000 em Compras e a conta continua em aberto).</p>
+          </div>
+
           <div class="field">
             <label for="expQty">Quantidade (opcional)</label>
-            <input id="expQty" type="text" placeholder="Ex.: 4 ou -" />
+            <input id="expQty" type="text" placeholder="Ex.: 4 (latas, semanas, galões...)" />
           </div>
-          <div class="field">
-            <label for="expStatus">Status</label>
-            <select id="expStatus">
-              <option value="ABERTO">ABERTO</option>
-              <option value="PAGO">PAGO</option>
-            </select>
+
+          <div class="field" style="margin-bottom:0">
+            <label for="expNote">Observação (opcional)</label>
+            <input id="expNote" type="text" placeholder="Ex.: Vence dia 10, cartão Nubank, Pix..." maxlength="120" />
           </div>
         </div>
-        <div class="form-grid-2">
-          <div class="field">
-            <label for="expInstCur">Parcela Atual (opcional)</label>
-            <input id="expInstCur" type="number" min="1" placeholder="Ex.: 4" />
-          </div>
-          <div class="field">
-            <label for="expInstTot">Total de Parcelas</label>
-            <input id="expInstTot" type="number" min="1" placeholder="Ex.: 10" />
-          </div>
-        </div>
+
         <div class="modal-foot">
           <button type="button" class="btn-ghost" data-close="expenseModal">Cancelar</button>
           <button type="submit" class="btn-primary">Salvar Despesa</button>
@@ -1878,6 +2094,7 @@
             <td class="item-name">
               <strong>${escapeHtml(e.name)}</strong>
               ${e.installmentTotal ? `<span class="parcel-tag">${parcelInfo}</span>` : ''}
+              ${e.note ? `<div class="item-note">${escapeHtml(e.note)}</div>` : ''}
             </td>
             <td><span class="group-badge group-${escapeHtml(e.group)}">${escapeHtml(e.group)}</span></td>
             <td class="muted">${escapeHtml(e.type)}</td>
@@ -1911,6 +2128,7 @@
               <span>${escapeHtml(e.type)}</span>
               ${parcelInfo ? `<span class="parcel-tag">${escapeHtml(parcelInfo)}</span>` : ''}
             </div>
+            ${e.note ? `<div class="item-note" style="margin:-4px 0 10px">${escapeHtml(e.note)}</div>` : ''}
             <div class="m-card-bottom">
               <div class="m-values">
                 <div><span>Previsto</span><strong>${fmtBRL(e.planned)}</strong></div>
@@ -1960,7 +2178,7 @@
                 ${parcelInfo ? `<span class="parcel-tag">${parcelInfo}</span>` : ''}
               </div>
               <div class="group-row-sub">
-                ${state.allExpMode === 'value' ? `${escapeHtml(e.group)} · ` : ''}${escapeHtml(e.type)}${qtyInfo ? ` · ${escapeHtml(qtyInfo)}` : ''}
+                ${state.allExpMode === 'value' ? `${escapeHtml(e.group)} · ` : ''}${escapeHtml(e.type)}${qtyInfo ? ` · ${escapeHtml(qtyInfo)}` : ''}${e.note ? ` · ${escapeHtml(e.note)}` : ''}
               </div>
             </div>
             <div class="group-row-right">
@@ -2053,7 +2271,7 @@
             </div>
             <div class="parcel-sub">
               <span>Parcela ${String(cur).padStart(2, '0')} de ${String(tot).padStart(2, '0')} (${pct}%)</span>
-              <span>${remaining === 0 ? 'Encerra neste mês!' : `Restam ${remaining} · Fim em ${formatMonthId(endMonth)}`}</span>
+              <span>${remaining === 0 ? 'Encerra neste mês!' : `Restam ${remaining} (${fmtBRL(remaining * (Number(p.planned) || 0))}) · Fim em ${formatMonthId(endMonth)}`}</span>
             </div>
             <div class="progress-track">
               <div class="progress-bar" style="width:${pct}%"></div>
@@ -2235,7 +2453,116 @@
       renderAllExpensesView(m, calcMetrics(m));
     });
 
-    // ===== MODAL DESPESA =====
+    // ===== MODAL DESPESA (SIMPLIFICADO E INTUITIVO) =====
+    let instValueMode = 'parcel'; // 'parcel' | 'total'
+
+    function syncExpenseFormUI() {
+      const status = $('expStatus').value;
+      const isPaid = status === 'PAGO';
+      const isInst = $('expIsInstallment').checked;
+
+      // Atualiza botões de status
+      $('expStatusSeg').querySelectorAll('.seg-btn').forEach((b) => {
+        b.classList.toggle('active', b.dataset.val === status);
+      });
+
+      // Mostra "Quanto saiu na prática?" apenas se Já Pago; mostra "Pagamento parcial" apenas se Em Aberto
+      $('paidAmountBox').classList.toggle('hidden', !isPaid);
+      $('partialPaidField').classList.toggle('hidden', isPaid);
+
+      // Mostra painel de parcelamento apenas quando ativado
+      $('installmentBox').classList.toggle('hidden', !isInst);
+
+      // Atualiza rótulo e observação do campo principal de valor
+      if (isInst) {
+        $('expPlannedLabel').textContent = 'Valor da parcela mensal (R$)';
+        $('expPlannedHint').textContent = instValueMode === 'total'
+          ? 'Calculado automaticamente a partir do valor total dividido pelas parcelas.'
+          : 'Informe o valor de 1 parcela por mês (não o valor total da compra).';
+      } else {
+        $('expPlannedLabel').textContent = 'Valor no mês (R$)';
+        $('expPlannedHint').textContent = 'Valor fixo ou estimado desta conta neste mês.';
+      }
+
+      // Modo de cálculo da parcela
+      $('instValueModeSeg').querySelectorAll('.seg-btn').forEach((b) => {
+        b.classList.toggle('active', b.dataset.mode === instValueMode);
+      });
+      $('instTotalCalcField').classList.toggle('hidden', !isInst || instValueMode !== 'total');
+
+      // Recalcula parcela automaticamente se modo = 'total'
+      if (isInst && instValueMode === 'total') {
+        const totalPurchase = parseFloat($('expTotalPurchase').value) || 0;
+        const totParc = parseInt($('expInstTot').value, 10) || 0;
+        if (totalPurchase > 0 && totParc > 0) {
+          $('expPlanned').value = (totalPurchase / totParc).toFixed(2);
+        }
+      }
+
+      // Atualiza texto explicativo ao vivo do parcelamento
+      if (isInst) {
+        const val = parseFloat($('expPlanned').value) || 0;
+        const cur = parseInt($('expInstCur').value, 10) || 1;
+        const tot = parseInt($('expInstTot').value, 10) || 0;
+        if (val > 0 && tot >= cur && tot >= 2) {
+          const remaining = Math.max(0, tot - cur);
+          const remTotal = remaining * val;
+          $('installmentLiveText').innerHTML = remaining === 0
+            ? `<strong>Última parcela (${cur}/${tot}):</strong> entra ${fmtBRL(val)} neste mês e some automaticamente no próximo mês.`
+            : `Entra <strong>${fmtBRL(val)}/mês</strong> (parcela ${cur}/${tot}). Após este mês faltam <strong>${remaining} parcela(s) (${fmtBRL(remTotal)})</strong> — o app avança sozinho todo mês.`;
+        } else {
+          $('installmentLiveText').innerHTML = `Informe sempre o valor de <strong>1 parcela mensal</strong> (ou use "Dividir valor total"). Ao gerar o próximo mês, o app avança a parcela e remove sozinho quando acabar.`;
+        }
+      }
+    }
+
+    function setMoreDetailsOpen(open) {
+      $('moreDetailsBox').classList.toggle('hidden', !open);
+      $('toggleMoreDetailsBtn').classList.toggle('open', open);
+    }
+
+    $('expStatusSeg').addEventListener('click', (e) => {
+      const btn = e.target.closest('.seg-btn');
+      if (!btn) return;
+      const nextStatus = btn.dataset.val;
+      $('expStatus').value = nextStatus;
+      if (nextStatus === 'PAGO' && !$('expPaid').value) {
+        const planned = parseFloat($('expPlanned').value) || 0;
+        if (planned > 0) $('expPaid').value = planned;
+      }
+      syncExpenseFormUI();
+    });
+
+    $('expIsInstallment').addEventListener('change', () => {
+      if ($('expIsInstallment').checked) {
+        if (!$('expInstCur').value) $('expInstCur').value = 1;
+        if (!$('expInstTot').value) $('expInstTot').value = 2;
+      } else {
+        instValueMode = 'parcel';
+        $('expTotalPurchase').value = '';
+      }
+      syncExpenseFormUI();
+    });
+
+    $('instValueModeSeg').addEventListener('click', (e) => {
+      const btn = e.target.closest('.seg-btn');
+      if (!btn) return;
+      instValueMode = btn.dataset.mode;
+      syncExpenseFormUI();
+      if (instValueMode === 'total') {
+        setTimeout(() => $('expTotalPurchase').focus(), 20);
+      }
+    });
+
+    ['expPlanned', 'expInstCur', 'expInstTot', 'expTotalPurchase'].forEach((id) => {
+      $(id).addEventListener('input', syncExpenseFormUI);
+    });
+
+    $('toggleMoreDetailsBtn').addEventListener('click', () => {
+      const isCurrentlyHidden = $('moreDetailsBox').classList.contains('hidden');
+      setMoreDetailsOpen(isCurrentlyHidden);
+    });
+
     function openExpenseModal(item = null) {
       $('expenseModalTitle').textContent = item ? 'Editar Despesa' : 'Nova Despesa';
       $('expId').value = item ? item.id : '';
@@ -2243,11 +2570,29 @@
       $('expGroup').value = item ? item.group : 'Casa';
       $('expType').value = item ? item.type : 'Fixa';
       $('expPlanned').value = item ? item.planned : '';
-      $('expPaid').value = item ? (item.paid ?? 0) : 0;
-      $('expQty').value = item ? (item.qty || '-') : '-';
-      $('expStatus').value = item ? item.status : 'ABERTO';
-      $('expInstCur').value = item && item.installmentCurrent ? item.installmentCurrent : '';
-      $('expInstTot').value = item && item.installmentTotal ? item.installmentTotal : '';
+
+      const status = item ? item.status : 'ABERTO';
+      $('expStatus').value = status;
+      $('expPaid').value = item && status === 'PAGO' ? (item.paid || item.planned || '') : '';
+      $('expPartialPaid').value = item && status === 'ABERTO' && Number(item.paid) > 0 ? item.paid : '';
+
+      const hasInst = !!(item && item.installmentTotal);
+      instValueMode = 'parcel';
+      $('expIsInstallment').checked = hasInst;
+      $('expTotalPurchase').value = '';
+      $('expInstCur').value = hasInst ? item.installmentCurrent : '';
+      $('expInstTot').value = hasInst ? item.installmentTotal : '';
+
+      const cleanQty = item && item.qty && item.qty !== '-' ? item.qty : '';
+      const cleanNote = item && item.note ? item.note : '';
+      $('expQty').value = cleanQty;
+      $('expNote').value = cleanNote;
+
+      // Abre "Mais opções" automaticamente só se o item editado já tiver detalhes extras
+      const hasMore = !!(cleanQty || cleanNote || (status === 'ABERTO' && item && Number(item.paid) > 0));
+      setMoreDetailsOpen(hasMore);
+
+      syncExpenseFormUI();
       $('expenseModal').classList.remove('hidden');
       setTimeout(() => $('expName').focus(), 40);
     }
@@ -2259,12 +2604,25 @@
       const m = structuredClone(getCurrentMonthData());
       const id = $('expId').value;
       const planned = parseFloat($('expPlanned').value) || 0;
-      let paid = parseFloat($('expPaid').value) || 0;
       const status = $('expStatus').value;
-      if (status === 'PAGO' && paid === 0) paid = planned;
 
-      const instCur = parseInt($('expInstCur').value, 10) || null;
-      const instTot = parseInt($('expInstTot').value, 10) || null;
+      let paid = 0;
+      if (status === 'PAGO') {
+        const rawPaid = parseFloat($('expPaid').value);
+        paid = !isNaN(rawPaid) && rawPaid > 0 ? rawPaid : planned;
+      } else {
+        const rawPartial = parseFloat($('expPartialPaid').value);
+        paid = !isNaN(rawPartial) && rawPartial > 0 ? rawPartial : 0;
+      }
+
+      const isInst = $('expIsInstallment').checked;
+      const instCur = isInst ? (parseInt($('expInstCur').value, 10) || 1) : null;
+      const instTot = isInst ? (parseInt($('expInstTot').value, 10) || null) : null;
+
+      if (isInst && (!instTot || instTot < instCur)) {
+        showToast('Confira a parcela atual e o total de parcelas.');
+        return;
+      }
 
       const payload = {
         id: id || uid('e'),
@@ -2272,11 +2630,12 @@
         group: $('expGroup').value,
         type: $('expType').value,
         qty: $('expQty').value.trim() || '-',
+        note: $('expNote').value.trim(),
         planned,
         paid,
         status,
-        installmentCurrent: instCur && instTot ? instCur : null,
-        installmentTotal: instCur && instTot ? instTot : null
+        installmentCurrent: isInst && instTot ? instCur : null,
+        installmentTotal: isInst && instTot ? instTot : null
       };
 
       if (id) {
@@ -2447,7 +2806,7 @@
 
     $('exportCsvBtn').addEventListener('click', () => {
       const m = getCurrentMonthData();
-      const header = ['Mês', 'Status', 'Item', 'Grupo', 'Tipo', 'Qtde/Parcela', 'Previsto', 'Valor Pago'];
+      const header = ['Mês', 'Status', 'Item', 'Grupo', 'Tipo', 'Qtde/Parcela', 'Previsto', 'Valor Pago', 'Observação'];
       const rows = (m.expenses || []).map((e) => {
         const qp = e.installmentTotal ? `${e.installmentCurrent}/${e.installmentTotal}` : (e.qty || '-');
         return [
@@ -2458,7 +2817,8 @@
           e.type,
           qp,
           Number(e.planned || 0).toFixed(2).replace('.', ','),
-          Number(e.paid || 0).toFixed(2).replace('.', ',')
+          Number(e.paid || 0).toFixed(2).replace('.', ','),
+          `"${String(e.note || '').replace(/"/g, '""')}"`
         ].join(';');
       });
       const csv = '\uFEFF' + [header.join(';'), ...rows].join('\n');
