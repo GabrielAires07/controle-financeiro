@@ -410,10 +410,11 @@
 
     .kpi-top {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 6px 8px;
+      margin-bottom: 10px;
     }
     .kpi-label {
       font-size: 0.72rem;
@@ -425,11 +426,13 @@
     .kpi-chip {
       font-size: 0.72rem;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 999px;
       background: rgba(148, 163, 184, 0.14);
       color: var(--text);
       white-space: nowrap;
+      max-width: 100%;
+      flex-shrink: 0;
     }
     .kpi-chip.green { background: var(--emerald-soft); color: #6ee7b7; }
     .kpi-chip.red { background: var(--rose-soft); color: #fda4af; }
@@ -1050,6 +1053,13 @@
 
       .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       .kpi-card { padding: 13px 14px; }
+      .kpi-top.kpi-top-stack {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .kpi-label { font-size: 0.69rem; letter-spacing: 0.04em; }
+      .kpi-chip { font-size: 0.69rem; padding: 2px 8px; }
       .kpi-value { font-size: 1.22rem; }
 
       /* Abas fixas ocupando 100% sem precisar arrastar para o lado */
@@ -1197,7 +1207,7 @@
         </div>
 
         <div id="kpiExpensesCard" class="kpi-card purple clickable" role="button" tabindex="0" aria-label="Abrir lista completa de despesas do mês">
-          <div class="kpi-top">
+          <div class="kpi-top kpi-top-stack">
             <span class="kpi-label">Despesas Totais</span>
             <span id="kpiExpPct" class="kpi-chip">0% da Renda</span>
           </div>
@@ -1227,15 +1237,11 @@
         </div>
 
         <div class="kpi-card cyan">
-          <div class="kpi-top">
+          <div class="kpi-top kpi-top-stack">
             <span class="kpi-label">Sobra Projetada</span>
             <span id="kpiSavePct" class="kpi-chip green">0% Poupado</span>
           </div>
           <div id="kpiLeftover" class="kpi-value green">R$ 0,00</div>
-          <div class="kpi-foot">
-            <span>Saldo no Banco Agora:</span>
-            <strong id="kpiBankNow">R$ 0,00</strong>
-          </div>
         </div>
       </section>
 
@@ -1828,7 +1834,6 @@
       $('kpiLeftover').className = `kpi-value ${k.leftover >= 0 ? 'green' : 'red'}`;
       $('kpiSavePct').textContent = `${k.savePct.toFixed(1)}% ${k.leftover >= 0 ? 'Poupado' : 'Déficit'}`;
       $('kpiSavePct').className = `kpi-chip ${k.leftover >= 0 ? 'green' : 'red'}`;
-      $('kpiBankNow').textContent = fmtBRL(k.bankNow);
 
       renderExpensesList(m);
       renderParcelamentos(m);
