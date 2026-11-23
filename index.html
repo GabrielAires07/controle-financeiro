@@ -35,6 +35,8 @@
       --amber-soft: rgba(245, 158, 11, 0.15);
       --rose: #f43f5e;
       --rose-soft: rgba(244, 63, 94, 0.15);
+      --pink: #ec4899;
+      --pink-soft: rgba(236, 72, 153, 0.16);
       --cyan: #06b6d4;
       --cyan-soft: rgba(6, 182, 212, 0.15);
       --radius: 16px;
@@ -212,7 +214,7 @@
       padding: 16px 16px 32px;
     }
 
-    /* Header (Desktop: 1 linha limpa | Mobile: marca + 3 pontinhos na direita, depois mês e botão 100%) */
+    /* Header */
     .topbar {
       display: flex;
       flex-wrap: wrap;
@@ -295,10 +297,11 @@
       text-transform: capitalize;
     }
 
-    .topbar-right {
+    .topbar-utils {
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-shrink: 0;
     }
 
     .menu-wrap {
@@ -315,8 +318,14 @@
       display: grid;
       place-items: center;
       color: var(--text);
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
     }
     .menu-btn:hover { background: var(--card-hover); }
+    .menu-btn.privacy-on {
+      background: var(--purple-soft);
+      border-color: rgba(139, 92, 246, 0.5);
+      color: #ddd6fe;
+    }
 
     .dropdown {
       position: absolute;
@@ -354,19 +363,35 @@
     .dropdown button:hover { background: var(--card-hover); }
     .dropdown button.danger { color: #fda4af; }
 
-    /* Banner */
+    /* Banners */
     .banner {
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), rgba(6, 182, 212, 0.12));
       border: 1px solid rgba(16, 185, 129, 0.32);
       border-radius: 14px;
       padding: 12px 16px;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
     }
+    .banner.due-warn {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.14), rgba(245, 158, 11, 0.12));
+      border-color: rgba(244, 63, 94, 0.35);
+      cursor: pointer;
+    }
+    .banner.due-soon {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.08));
+      border-color: rgba(245, 158, 11, 0.35);
+      cursor: pointer;
+    }
+    .banner-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .banner-left svg { flex-shrink: 0; }
     .banner button { color: var(--muted); font-size: 1.1rem; padding: 4px 8px; flex-shrink: 0; }
 
     /* KPI Grid */
@@ -489,8 +514,11 @@
       background: linear-gradient(90deg, #10b981, #34d399);
       transition: width 0.35s ease;
     }
+    .progress-bar.over {
+      background: linear-gradient(90deg, #f43f5e, #fb7185);
+    }
 
-    /* Tabs bar (FIXA, sem scroll horizontal) */
+    /* Tabs bar (FIXA, 4 abas sem rolagem horizontal) */
     .tabs-bar {
       display: flex;
       flex-wrap: wrap;
@@ -501,7 +529,7 @@
     }
     .tabs {
       display: grid;
-      grid-template-columns: repeat(3, auto);
+      grid-template-columns: repeat(4, auto);
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -531,11 +559,12 @@
       border-radius: var(--radius);
       padding: 12px;
       display: grid;
-      grid-template-columns: 1.8fr repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin-bottom: 16px;
     }
     .search-wrap {
+      grid-column: span 3;
       position: relative;
       display: flex;
       align-items: center;
@@ -555,7 +584,7 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 10px 12px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       outline: none;
       width: 100%;
     }
@@ -563,6 +592,71 @@
       padding-left: 38px;
     }
     .filters-box input:focus, .filters-box select:focus { border-color: var(--emerald); }
+
+    /* Badges: Group, Owner, Due Date, Parcel */
+    .group-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .group-Casa { background: var(--blue-soft); color: #93c5fd; }
+    .group-Ivy { background: var(--purple-soft); color: #c4b5fd; }
+    .group-Cachorros { background: var(--cyan-soft); color: #67e8f9; }
+    .group-Outros { background: rgba(148, 163, 184, 0.16); color: #cbd5e1; }
+
+    .owner-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.71rem;
+      font-weight: 700;
+    }
+    .owner-Gabriel { background: rgba(59, 130, 246, 0.16); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.28); }
+    .owner-Sabrina { background: var(--pink-soft); color: #f9a8d4; border: 1px solid rgba(236, 72, 153, 0.3); }
+
+    .due-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .due-overdue { background: var(--rose-soft); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.38); }
+    .due-today { background: rgba(249, 115, 22, 0.2); color: #fdba74; border: 1px solid rgba(249, 115, 22, 0.45); }
+    .due-soon { background: var(--amber-soft); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.35); }
+    .due-normal, .due-muted { background: rgba(148, 163, 184, 0.11); color: var(--muted); }
+
+    .parcel-tag {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-size: 0.71rem;
+      font-weight: 700;
+      background: var(--purple-soft);
+      color: #c4b5fd;
+    }
+
+    /* Partial progress inside list item */
+    .partial-meter {
+      margin-top: 6px;
+      max-width: 240px;
+    }
+    .partial-meter-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.71rem;
+      color: var(--muted);
+      margin-bottom: 3px;
+      gap: 8px;
+    }
+    .partial-meter-label strong.over { color: #fb7185; }
+    .partial-meter .progress-track { margin-top: 0; height: 5px; }
 
     /* Table */
     .table-wrap {
@@ -574,7 +668,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 720px;
+      min-width: 820px;
     }
     thead th {
       text-align: left;
@@ -582,14 +676,14 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--muted);
-      padding: 14px 14px;
+      padding: 14px 12px;
       border-bottom: 1px solid var(--border);
       font-weight: 700;
     }
     tbody td {
-      padding: 13px 14px;
+      padding: 13px 12px;
       border-bottom: 1px solid var(--border);
-      font-size: 0.9rem;
+      font-size: 0.89rem;
       vertical-align: middle;
     }
     tbody tr:last-child td { border-bottom: none; }
@@ -600,10 +694,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 78px;
+      min-width: 76px;
       padding: 5px 10px;
       border-radius: 999px;
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 800;
       letter-spacing: 0.04em;
       border: 1px solid transparent;
@@ -621,36 +715,33 @@
       color: #34d399;
     }
 
-    .group-badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 0.76rem;
-      font-weight: 700;
-    }
-    .group-Casa { background: var(--blue-soft); color: #93c5fd; }
-    .group-Ivy { background: var(--purple-soft); color: #c4b5fd; }
-    .group-Cachorros { background: var(--cyan-soft); color: #67e8f9; }
-    .group-Outros { background: rgba(148, 163, 184, 0.16); color: #cbd5e1; }
-
     .num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
     .muted { color: var(--muted); }
-    .parcel-tag {
-      display: inline-block;
-      margin-left: 6px;
-      padding: 2px 7px;
-      border-radius: 6px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      background: var(--purple-soft);
-      color: #c4b5fd;
-    }
 
     .row-actions {
       display: inline-flex;
       gap: 6px;
       justify-content: flex-end;
+      align-items: center;
     }
+    .quick-add-btn {
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 9px;
+      background: var(--emerald-soft);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+      font-size: 0.76rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      white-space: nowrap;
+      transition: background 0.15s, transform 0.12s;
+    }
+    .quick-add-btn:hover { background: rgba(16, 185, 129, 0.24); }
+    .quick-add-btn:active { transform: scale(0.96); }
+
     .icon-btn {
       width: 34px;
       height: 34px;
@@ -676,16 +767,16 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .m-card-title { font-weight: 700; font-size: 0.98rem; }
     .m-card-meta {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       margin-bottom: 10px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--muted);
     }
     .m-card-bottom {
@@ -694,10 +785,11 @@
       justify-content: space-between;
       padding-top: 10px;
       border-top: 1px solid var(--border);
+      gap: 8px;
     }
-    .m-values { display: flex; gap: 14px; font-size: 0.84rem; }
-    .m-values span { display: block; font-size: 0.7rem; color: var(--muted); }
-    .m-values strong { font-size: 0.92rem; }
+    .m-values { display: flex; gap: 12px; font-size: 0.84rem; }
+    .m-values span { display: block; font-size: 0.69rem; color: var(--muted); }
+    .m-values strong { font-size: 0.9rem; }
 
     /* ===== DEDICATED VIEW: TODAS AS DESPESAS DO MÊS ===== */
     .all-exp-header {
@@ -715,14 +807,8 @@
       align-items: center;
       gap: 12px;
     }
-    .all-exp-title-group h2 {
-      font-size: 1.15rem;
-      line-height: 1.2;
-    }
-    .all-exp-title-group p {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    .all-exp-title-group h2 { font-size: 1.15rem; line-height: 1.2; }
+    .all-exp-title-group p { font-size: 0.8rem; color: var(--muted); }
     .all-exp-summary {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -744,10 +830,7 @@
       font-weight: 700;
       margin-bottom: 4px;
     }
-    .mini-stat strong {
-      font-size: 1.08rem;
-      font-weight: 800;
-    }
+    .mini-stat strong { font-size: 1.08rem; font-weight: 800; }
     .all-exp-controls {
       display: flex;
       flex-wrap: wrap;
@@ -790,21 +873,18 @@
       background: rgba(255, 255, 255, 0.025);
       border-bottom: 1px solid var(--border);
     }
-    .group-section-head-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .group-section-head-left { display: flex; align-items: center; gap: 8px; }
     .group-section-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       padding: 12px 16px;
       border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
     }
     .group-section-row:last-child { border-bottom: none; }
-    .group-row-info { min-width: 0; flex: 1; }
+    .group-row-info { min-width: 160px; flex: 1; }
     .group-row-title {
       font-weight: 600;
       font-size: 0.94rem;
@@ -813,23 +893,131 @@
       flex-wrap: wrap;
       gap: 6px;
     }
-    .group-row-sub {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-    .group-row-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-    }
-    .group-row-price {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
+    .group-row-sub { font-size: 0.77rem; color: var(--muted); margin-top: 2px; }
+    .group-row-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .group-row-price { text-align: right; font-variant-numeric: tabular-nums; }
     .group-row-price strong { display: block; font-size: 0.94rem; }
     .group-row-price span { display: block; font-size: 0.72rem; color: var(--muted); }
+
+    /* ===== METAS / CAIXINHAS ===== */
+    .goals-top-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .goals-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .goals-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .goal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .goal-card-accent {
+      position: absolute;
+      left: 0; top: 0; right: 0;
+      height: 3px;
+    }
+    .goal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .goal-title { font-size: 1.02rem; font-weight: 700; }
+    .goal-target { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+    .goal-amount {
+      font-size: 1.48rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .goal-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .goal-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .goal-btn-add {
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: var(--emerald-soft);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+    .goal-btn-add:hover { background: rgba(16, 185, 129, 0.24); }
+    .goal-btn-sub {
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.84rem;
+    }
+    .goal-btn-sub:hover { background: var(--card-hover); }
+    .goal-recent {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
+    .goal-recent-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      gap: 8px;
+    }
+
+    .starter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .color-swatches {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      transition: transform 0.15s;
+    }
+    .color-swatch.active {
+      border-color: #fff;
+      transform: scale(1.1);
+    }
 
     /* Parcelamentos & Analytics */
     .section-grid {
@@ -849,6 +1037,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 8px;
     }
 
     .parcel-item {
@@ -872,6 +1061,8 @@
       font-size: 0.82rem;
       color: var(--muted);
       margin-bottom: 8px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .timeline-row {
@@ -892,6 +1083,29 @@
       color: #34d399;
       white-space: nowrap;
     }
+
+    /* Couple Split Cards */
+    .couple-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .couple-box {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px;
+    }
+    .couple-box-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .couple-box-val { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+    .couple-box-sub { font-size: 0.76rem; color: var(--muted); line-height: 1.5; }
 
     /* Charts */
     .donut-layout {
@@ -972,7 +1186,7 @@
       margin-top: 18px;
     }
 
-    /* ===== SIMPLIFIED EXPENSE FORM ===== */
+    /* ===== SIMPLIFIED EXPENSE FORM & QUICK ADD ===== */
     .field-hint {
       font-size: 0.76rem;
       color: var(--muted);
@@ -989,10 +1203,13 @@
       border-radius: 12px;
       padding: 4px;
     }
+    .seg-control.seg-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
     .seg-btn {
-      padding: 9px 10px;
+      padding: 9px 8px;
       border-radius: 9px;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 700;
       color: var(--muted);
       text-align: center;
@@ -1008,10 +1225,21 @@
       color: #34d399;
       box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.4);
     }
-    .seg-btn.active.mode-btn {
+    .seg-btn.active.mode-btn,
+    .seg-btn.active[data-owner="Compartilhado"] {
       background: var(--purple-soft);
       color: #ddd6fe;
       box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.4);
+    }
+    .seg-btn.active[data-owner="Gabriel"] {
+      background: var(--blue-soft);
+      color: #93c5fd;
+      box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.4);
+    }
+    .seg-btn.active[data-owner="Sabrina"] {
+      background: var(--pink-soft);
+      color: #f9a8d4;
+      box-shadow: inset 0 0 0 1px rgba(236, 72, 153, 0.4);
     }
 
     .toggle-row {
@@ -1026,16 +1254,8 @@
       margin-bottom: 12px;
       cursor: pointer;
     }
-    .toggle-row-text strong {
-      display: block;
-      font-size: 0.88rem;
-      color: var(--text);
-    }
-    .toggle-row-text span {
-      display: block;
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
+    .toggle-row-text strong { display: block; font-size: 0.88rem; color: var(--text); }
+    .toggle-row-text span { display: block; font-size: 0.75rem; color: var(--muted); }
     .switch-input {
       appearance: none;
       -webkit-appearance: none;
@@ -1059,12 +1279,8 @@
       background: #fff;
       transition: transform 0.2s;
     }
-    .switch-input:checked {
-      background: var(--purple);
-    }
-    .switch-input:checked::after {
-      transform: translateX(18px);
-    }
+    .switch-input:checked { background: var(--purple); }
+    .switch-input:checked::after { transform: translateX(18px); }
 
     .sub-panel {
       background: rgba(15, 23, 42, 0.55);
@@ -1095,11 +1311,7 @@
       line-height: 1.45;
       margin-top: 8px;
     }
-    .info-callout svg {
-      flex-shrink: 0;
-      margin-top: 1px;
-      color: #a5b4fc;
-    }
+    .info-callout svg { flex-shrink: 0; margin-top: 1px; color: #a5b4fc; }
 
     .more-toggle-btn {
       width: 100%;
@@ -1121,10 +1333,52 @@
     .more-toggle-btn.open svg { transform: rotate(180deg); }
 
     .item-note {
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       color: var(--muted);
       margin-top: 3px;
       line-height: 1.35;
+    }
+
+    /* Quick add & Goal history list */
+    .history-list {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .history-list h4 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .history-entry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 11px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 7px;
+      font-size: 0.84rem;
+    }
+    .history-entry:last-child { margin-bottom: 0; }
+    .history-entry-meta { font-size: 0.73rem; color: var(--muted); }
+
+    .quick-chip-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: var(--emerald-soft);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-top: 6px;
     }
 
     .income-row {
@@ -1172,26 +1426,19 @@
     @media (max-width: 960px) {
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .filters-box { grid-template-columns: 1fr 1fr; }
-      .section-grid { grid-template-columns: 1fr; }
+      .search-wrap { grid-column: 1 / -1; }
+      .section-grid, .goals-grid, .couple-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 680px) {
-      /* Topbar mobile: Linha 1 = Marca + 3 pontinhos na direita; Linha 2 = Gerar Novo Mês 100%; Linha 3 = Seletor Mês 100% */
       .topbar {
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
         gap: 10px;
       }
-      .brand {
-        grid-column: 1 / 2;
-        grid-row: 1;
-      }
-      .menu-wrap {
-        grid-column: 2 / 3;
-        grid-row: 1;
-        justify-self: end;
-      }
+      .brand { grid-column: 1 / 2; grid-row: 1; }
+      .topbar-utils { grid-column: 2 / 3; grid-row: 1; justify-self: end; }
       #generateNextBtn {
         grid-column: 1 / -1;
         grid-row: 2;
@@ -1217,31 +1464,26 @@
       .kpi-chip { font-size: 0.69rem; padding: 2px 8px; }
       .kpi-value { font-size: 1.22rem; }
 
-      /* Abas fixas ocupando 100% sem precisar arrastar para o lado */
-      .tabs-bar {
-        flex-direction: column;
-        align-items: stretch;
-      }
+      /* 4 abas fixas ocupando 100% sem precisar arrastar */
+      .tabs-bar { flex-direction: column; align-items: stretch; }
       .tabs {
         width: 100%;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
       }
       .tab-btn {
-        padding: 10px 4px;
-        font-size: 0.82rem;
+        padding: 10px 2px;
+        font-size: 0.77rem;
       }
-      .tab-extra {
-        display: none;
-      }
-      #addExpenseBtn {
-        width: 100%;
-      }
+      .tab-extra { display: none; }
+      #addExpenseBtn { width: 100%; }
 
-      .filters-box { grid-template-columns: 1fr; }
+      .filters-box { grid-template-columns: 1fr 1fr; }
+      .search-wrap, #sortFilter { grid-column: 1 / -1; }
+
       .table-wrap { display: none; }
       .mobile-list { display: flex; }
       .form-grid-2 { grid-template-columns: 1fr; }
-      .all-exp-summary { grid-template-columns: 1fr; }
+      .all-exp-summary, .goals-top-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1312,36 +1554,49 @@
           <span>Gerar Novo Mês</span>
         </button>
 
-        <div class="menu-wrap">
-          <button id="menuBtn" class="menu-btn" aria-label="Mais opções">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></svg>
+        <div class="topbar-utils">
+          <button id="privacyBtn" class="menu-btn" title="Ocultar ou mostrar valores" aria-label="Modo privacidade">
+            <span id="privacyIconWrap"></span>
           </button>
-          <div id="dropdownMenu" class="dropdown hidden">
-            <div id="userEmailLabel" class="dropdown-user">Conectado</div>
-            <button id="exportCsvBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
-              <span>Exportar CSV (Excel)</span>
+          <div class="menu-wrap">
+            <button id="menuBtn" class="menu-btn" aria-label="Mais opções">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="19" r="1.4" fill="currentColor"/></svg>
             </button>
-            <button id="exportJsonBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              <span>Baixar Backup (JSON)</span>
-            </button>
-            <button id="importJsonBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-              <span>Restaurar Backup (JSON)</span>
-            </button>
-            <button id="logoutBtn" class="danger">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-              <span>Sair da conta</span>
-            </button>
+            <div id="dropdownMenu" class="dropdown hidden">
+              <div id="userEmailLabel" class="dropdown-user">Conectado</div>
+              <button id="exportCsvBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                <span>Exportar CSV (Excel)</span>
+              </button>
+              <button id="exportJsonBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Baixar Backup (JSON)</span>
+              </button>
+              <button id="importJsonBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span>Restaurar Backup (JSON)</span>
+              </button>
+              <button id="logoutBtn" class="danger">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Sair da conta</span>
+              </button>
+            </div>
+            <input id="importFileInput" type="file" accept=".json" class="hidden" />
           </div>
-          <input id="importFileInput" type="file" accept=".json" class="hidden" />
         </div>
       </header>
 
       <div id="rolloverBanner" class="banner hidden">
         <div id="rolloverBannerText"></div>
         <button id="closeBannerBtn" aria-label="Fechar">✕</button>
+      </div>
+
+      <div id="dueAlertBanner" class="banner hidden" title="Toque para ordenar por vencimento">
+        <div class="banner-left">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="dueAlertText"></span>
+        </div>
+        <span style="font-size:0.78rem;font-weight:700;white-space:nowrap">Ver ›</span>
       </div>
 
       <!-- KPI Cards -->
@@ -1404,7 +1659,8 @@
       <div class="tabs-bar">
         <div class="tabs" role="tablist">
           <button class="tab-btn active" data-tab="lancamentos">Lançamentos</button>
-          <button class="tab-btn" data-tab="parcelamentos">Parcelamentos</button>
+          <button class="tab-btn" data-tab="parcelamentos">Parcela<span class="tab-extra">mento</span>s</button>
+          <button class="tab-btn" data-tab="metas">Metas</button>
           <button class="tab-btn" data-tab="analise">Análise<span class="tab-extra"> &amp; Gráficos</span></button>
         </div>
         <button id="addExpenseBtn" class="btn-white">+ Nova Despesa</button>
@@ -1420,22 +1676,33 @@
             </svg>
             <input id="searchInput" type="search" placeholder="Buscar conta ou item..." />
           </div>
+          <select id="sortFilter" aria-label="Ordenar despesas">
+            <option value="default">Ordem: Padrão</option>
+            <option value="due">Ordem: Vencimento</option>
+            <option value="value">Ordem: Maior Valor</option>
+          </select>
           <select id="groupFilter">
-            <option value="ALL">Todos os Grupos</option>
+            <option value="ALL">Todos Grupos</option>
             <option value="Casa">Casa</option>
             <option value="Ivy">Ivy</option>
             <option value="Cachorros">Cachorros</option>
             <option value="Outros">Outros</option>
           </select>
           <select id="typeFilter">
-            <option value="ALL">Todos os Tipos</option>
+            <option value="ALL">Todos Tipos</option>
             <option value="Fixa">Fixas</option>
             <option value="Variável">Variáveis</option>
           </select>
           <select id="statusFilter">
-            <option value="ALL">Todos os Status</option>
+            <option value="ALL">Todos Status</option>
             <option value="ABERTO">Em Aberto</option>
             <option value="PAGO">Pagas</option>
+          </select>
+          <select id="ownerFilter">
+            <option value="ALL">Quem paga: Todos</option>
+            <option value="Gabriel">Gabriel</option>
+            <option value="Sabrina">Sabrina</option>
+            <option value="Compartilhado">Compartilhado</option>
           </select>
         </div>
 
@@ -1445,11 +1712,10 @@
               <tr>
                 <th>Status</th>
                 <th>Item / Descrição</th>
-                <th>Grupo</th>
-                <th>Tipo</th>
-                <th>Qtde / Parcela</th>
+                <th>Grupo &amp; Quem paga</th>
+                <th>Vencimento</th>
                 <th class="num">Previsto</th>
-                <th class="num">Valor Pago</th>
+                <th class="num">Pago</th>
                 <th class="num">Ações</th>
               </tr>
             </thead>
@@ -1474,8 +1740,42 @@
         </div>
       </section>
 
-      <!-- TAB 3: ANÁLISE -->
+      <!-- TAB 3: METAS & CAIXINHAS -->
+      <section id="tab-metas" class="hidden">
+        <div class="goals-top-grid">
+          <div class="kpi-card green">
+            <div class="kpi-top">
+              <span class="kpi-label">Total nas Caixinhas</span>
+              <span id="goalsCountChip" class="kpi-chip green">0 metas</span>
+            </div>
+            <div id="goalsTotalSaved" class="kpi-value green">R$ 0,00</div>
+            <div class="kpi-foot"><span>Acumulado de vocês dois</span></div>
+          </div>
+          <div class="kpi-card cyan">
+            <div class="kpi-top">
+              <span class="kpi-label">Sobra Disponível do Mês</span>
+              <span id="goalsMonthTag" class="kpi-chip">Novembro</span>
+            </div>
+            <div id="goalsMonthLeftover" class="kpi-value">R$ 0,00</div>
+            <div class="kpi-foot"><span>Dê um destino para a sobra antes de gastar</span></div>
+          </div>
+        </div>
+
+        <div class="goals-header">
+          <h3 style="font-size:1rem">Suas Caixinhas &amp; Metas</h3>
+          <button id="addGoalBtn" class="btn-primary">+ Nova Caixinha</button>
+        </div>
+
+        <div id="goalsContainer"></div>
+      </section>
+
+      <!-- TAB 4: ANÁLISE -->
       <section id="tab-analise" class="hidden">
+        <div class="panel-card" style="margin-bottom:16px">
+          <h3><span>Divisão do Casal no Mês</span><span class="muted" style="font-size:0.78rem;font-weight:500">Quem paga o quê</span></h3>
+          <div id="coupleSplitContainer"></div>
+        </div>
+
         <div class="section-grid">
           <div class="panel-card">
             <h3>Distribuição por Grupo</h3>
@@ -1486,6 +1786,7 @@
             <div id="fixedVarContainer"></div>
           </div>
         </div>
+
         <div class="panel-card" style="margin-top:16px">
           <h3>Histórico Comparativo Mensal</h3>
           <div id="historyContainer"></div>
@@ -1531,9 +1832,12 @@
           <button class="filter-pill" data-filter="Variável">Variáveis</button>
           <button class="filter-pill" data-filter="ABERTO">Em Aberto</button>
           <button class="filter-pill" data-filter="PAGO">Pagas</button>
+          <button class="filter-pill" data-filter="Gabriel">Gabriel</button>
+          <button class="filter-pill" data-filter="Sabrina">Sabrina</button>
         </div>
         <div class="pill-group" id="allExpModePills">
           <button class="filter-pill active" data-mode="grouped">Por Grupo</button>
+          <button class="filter-pill" data-mode="due">Vencimento</button>
           <button class="filter-pill" data-mode="value">Maior Valor</button>
         </div>
       </div>
@@ -1553,6 +1857,7 @@
       <form id="expenseForm">
         <input type="hidden" id="expId" />
         <input type="hidden" id="expStatus" value="ABERTO" />
+        <input type="hidden" id="expOwner" value="Compartilhado" />
 
         <!-- 1. Essencial -->
         <div class="field">
@@ -1560,11 +1865,17 @@
           <input id="expName" type="text" placeholder="Ex.: Luz, Mercado, Fralda..." required />
         </div>
 
-        <div class="field">
-          <label id="expPlannedLabel" for="expPlanned">Valor no mês (R$)</label>
-          <input id="expPlanned" type="number" step="0.01" min="0" placeholder="0,00" required />
-          <p id="expPlannedHint" class="field-hint">Valor fixo ou estimado desta conta neste mês.</p>
+        <div class="form-grid-2">
+          <div class="field">
+            <label id="expPlannedLabel" for="expPlanned">Valor no mês (R$)</label>
+            <input id="expPlanned" type="number" step="0.01" min="0" placeholder="0,00" required />
+          </div>
+          <div class="field">
+            <label for="expDueDay">Dia do vencimento (opcional)</label>
+            <input id="expDueDay" type="number" min="1" max="31" placeholder="Ex.: 10" />
+          </div>
         </div>
+        <p id="expPlannedHint" class="field-hint" style="margin:-8px 0 14px">Valor fixo ou estimado desta conta neste mês.</p>
 
         <div class="form-grid-2">
           <div class="field">
@@ -1585,7 +1896,17 @@
           </div>
         </div>
 
-        <!-- 2. Situação do pagamento -->
+        <!-- 2. Quem paga -->
+        <div class="field">
+          <label>Quem paga esta despesa?</label>
+          <div class="seg-control seg-3" id="expOwnerSeg">
+            <button type="button" class="seg-btn active" data-owner="Compartilhado">Compartilhado</button>
+            <button type="button" class="seg-btn" data-owner="Gabriel">Gabriel</button>
+            <button type="button" class="seg-btn" data-owner="Sabrina">Sabrina</button>
+          </div>
+        </div>
+
+        <!-- 3. Situação do pagamento -->
         <div class="field">
           <label>Situação do pagamento</label>
           <div class="seg-control" id="expStatusSeg">
@@ -1603,7 +1924,7 @@
           </div>
         </div>
 
-        <!-- 3. Compra Parcelada (opcional) -->
+        <!-- 4. Compra Parcelada (opcional) -->
         <label class="toggle-row" for="expIsInstallment">
           <div class="toggle-row-text">
             <strong>Compra parcelada</strong>
@@ -1644,7 +1965,7 @@
           </div>
         </div>
 
-        <!-- 4. Mais detalhes (recolhido por padrão) -->
+        <!-- 5. Mais detalhes (recolhido por padrão) -->
         <button id="toggleMoreDetailsBtn" type="button" class="more-toggle-btn">
           <span>Mais opções (pagamento parcial, quantidade, observação)</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -1654,7 +1975,7 @@
           <div id="partialPaidField" class="field">
             <label for="expPartialPaid">Já gastou uma parte? — Pagamento parcial (R$)</label>
             <input id="expPartialPaid" type="number" step="0.01" min="0" placeholder="0,00" />
-            <p class="field-hint">Útil para gastos fracionados no mês (ex.: já gastou R$ 400 de R$ 1.000 em Compras e a conta continua em aberto).</p>
+            <p class="field-hint">Dica: para gastos fracionados como mercado e carne, você também pode usar o botão rápido <strong>+ R$</strong> direto na lista.</p>
           </div>
 
           <div class="field">
@@ -1664,7 +1985,7 @@
 
           <div class="field" style="margin-bottom:0">
             <label for="expNote">Observação (opcional)</label>
-            <input id="expNote" type="text" placeholder="Ex.: Vence dia 10, cartão Nubank, Pix..." maxlength="120" />
+            <input id="expNote" type="text" placeholder="Ex.: Débito automático, Pix, loja..." maxlength="120" />
           </div>
         </div>
 
@@ -1673,6 +1994,126 @@
           <button type="submit" class="btn-primary">Salvar Despesa</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL: SOMA RÁPIDA (+ R$) -->
+  <div id="quickAddModal" class="modal-backdrop hidden">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="quickAddTitle">Somar gasto</h2>
+        <button class="modal-close" data-close="quickAddModal">✕</button>
+      </div>
+
+      <div class="sub-panel emerald-tint" style="margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px">
+          <span class="muted" style="font-size:0.8rem">Acumulado no mês</span>
+          <strong id="quickAddBudgetInfo" style="font-size:0.82rem"></strong>
+        </div>
+        <div id="quickAddCurrentVal" style="font-size:1.35rem;font-weight:800;color:#34d399">R$ 0,00</div>
+        <div class="progress-track" style="height:8px">
+          <div id="quickAddBar" class="progress-bar" style="width:0%"></div>
+        </div>
+        <div id="quickAddRemaining" class="field-hint" style="margin-top:6px"></div>
+      </div>
+
+      <form id="quickAddForm">
+        <input type="hidden" id="quickAddExpId" />
+        <div class="field">
+          <label for="quickAddAmount">Valor gasto agora (R$)</label>
+          <input id="quickAddAmount" type="number" step="0.01" min="0.01" placeholder="Ex.: 145,50" required />
+        </div>
+        <div class="field">
+          <label for="quickAddNote">Onde / detalhe (opcional)</label>
+          <input id="quickAddNote" type="text" placeholder="Ex.: Supermercado, açougue, sacolão..." maxlength="80" />
+        </div>
+        <label class="toggle-row" for="quickAddMarkPaid" style="margin-bottom:14px">
+          <div class="toggle-row-text">
+            <strong>Encerrar conta como PAGA</strong>
+            <span>Ative só se não for gastar mais nada neste item no mês</span>
+          </div>
+          <input id="quickAddMarkPaid" type="checkbox" class="switch-input" />
+        </label>
+        <button type="submit" class="btn-primary btn-full">+ Somar ao acumulado</button>
+      </form>
+
+      <div id="quickAddHistoryWrap" class="history-list hidden">
+        <h4>Lançamentos somados neste mês</h4>
+        <div id="quickAddHistoryList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CAIXINHA / META (CRIAR OU EDITAR) -->
+  <div id="goalModal" class="modal-backdrop hidden">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="goalModalTitle">Nova Caixinha</h2>
+        <button class="modal-close" data-close="goalModal">✕</button>
+      </div>
+      <form id="goalForm">
+        <input type="hidden" id="goalId" />
+        <div class="field">
+          <label for="goalName">Nome da Caixinha / Meta</label>
+          <input id="goalName" type="text" placeholder="Ex.: Reserva de Emergência, Fundo da Ivy..." required />
+        </div>
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="goalTarget">Valor da meta (R$ — opcional)</label>
+            <input id="goalTarget" type="number" step="0.01" min="0" placeholder="Ex.: 10000" />
+          </div>
+          <div class="field">
+            <label for="goalSaved">Valor já guardado (R$)</label>
+            <input id="goalSaved" type="number" step="0.01" min="0" value="0" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Cor de destaque</label>
+          <div id="goalColorSwatches" class="color-swatches">
+            <button type="button" class="color-swatch active" data-color="#10b981" style="background:#10b981" aria-label="Verde"></button>
+            <button type="button" class="color-swatch" data-color="#3b82f6" style="background:#3b82f6" aria-label="Azul"></button>
+            <button type="button" class="color-swatch" data-color="#8b5cf6" style="background:#8b5cf6" aria-label="Roxo"></button>
+            <button type="button" class="color-swatch" data-color="#06b6d4" style="background:#06b6d4" aria-label="Ciano"></button>
+            <button type="button" class="color-swatch" data-color="#f59e0b" style="background:#f59e0b" aria-label="Âmbar"></button>
+            <button type="button" class="color-swatch" data-color="#ec4899" style="background:#ec4899" aria-label="Rosa"></button>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn-ghost" data-close="goalModal">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar Caixinha</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: MOVIMENTAR CAIXINHA (+ GUARDAR / - RESGATAR) -->
+  <div id="goalMoveModal" class="modal-backdrop hidden">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="goalMoveTitle">Guardar na Caixinha</h2>
+        <button class="modal-close" data-close="goalMoveModal">✕</button>
+      </div>
+      <form id="goalMoveForm">
+        <input type="hidden" id="goalMoveId" />
+        <input type="hidden" id="goalMoveType" value="deposit" />
+        <div class="field">
+          <label id="goalMoveAmountLabel" for="goalMoveAmount">Quanto deseja guardar? (R$)</label>
+          <input id="goalMoveAmount" type="number" step="0.01" min="0.01" placeholder="0,00" required />
+          <div id="goalLeftoverQuickWrap" class="hidden">
+            <button type="button" id="useLeftoverChip" class="quick-chip-btn"></button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="goalMoveNote">Descrição (opcional)</label>
+          <input id="goalMoveNote" type="text" placeholder="Ex.: Sobra de Novembro, 13º, extra..." maxlength="80" />
+        </div>
+        <button id="goalMoveSubmitBtn" type="submit" class="btn-primary btn-full">Confirmar depósito</button>
+      </form>
+
+      <div id="goalMoveHistoryWrap" class="history-list hidden">
+        <h4>Histórico da caixinha</h4>
+        <div id="goalMoveHistoryList"></div>
+      </div>
     </div>
   </div>
 
@@ -1718,9 +2159,14 @@
       });
     }
 
-    // Ícones SVG reutilizáveis (limpos e uniformes no Android, iOS e PC)
+    // Ícones SVG reutilizáveis
     const ICON_EDIT = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>`;
     const ICON_TRASH = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>`;
+    const ICON_EYE_OPEN = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    const ICON_EYE_OFF = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>`;
+    const ICON_CAL = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+
+    const GOALS_DOC_ID = '_metas';
 
     // ===== DADOS INICIAIS DE NOVEMBRO/2026 =====
     function buildInitialNovember() {
@@ -1732,35 +2178,35 @@
           { id: 'inc-3', name: 'Sabrina', amount: 4100 }
         ],
         expenses: [
-          { id: 'e-01', name: 'Luz', group: 'Casa', type: 'Fixa', qty: '-', planned: 510.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-02', name: 'Água', group: 'Casa', type: 'Fixa', qty: '-', planned: 90.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-03', name: 'Net', group: 'Casa', type: 'Fixa', qty: '-', planned: 179.93, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-04', name: 'Tim', group: 'Casa', type: 'Fixa', qty: '-', planned: 259.99, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-05', name: 'Compras', group: 'Casa', type: 'Fixa', qty: '-', planned: 1000.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-06', name: 'Carne', group: 'Casa', type: 'Fixa', qty: '4', planned: 1120.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-07', name: 'Verdura', group: 'Casa', type: 'Fixa', qty: '3', planned: 270.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-08', name: 'Água Galão', group: 'Casa', type: 'Fixa', qty: '6', planned: 72.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-09', name: 'Leite', group: 'Ivy', type: 'Fixa', qty: '4', planned: 269.95, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-10', name: 'Fralda', group: 'Ivy', type: 'Fixa', qty: '-', planned: 150.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-11', name: 'Sabão', group: 'Ivy', type: 'Fixa', qty: '1', planned: 40.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-12', name: 'Amaciante', group: 'Ivy', type: 'Fixa', qty: '1', planned: 20.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-13', name: 'Sabonete', group: 'Ivy', type: 'Fixa', qty: '-', planned: 35.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-14', name: 'Lenço', group: 'Ivy', type: 'Fixa', qty: '-', planned: 40.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-15', name: 'Creme', group: 'Ivy', type: 'Fixa', qty: '-', planned: 37.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-16', name: 'Banho', group: 'Cachorros', type: 'Fixa', qty: '-', planned: 180.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-17', name: 'Ração', group: 'Cachorros', type: 'Fixa', qty: '1', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-18', name: 'Tapete', group: 'Cachorros', type: 'Fixa', qty: '1', planned: 90.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-19', name: 'Biscoito', group: 'Cachorros', type: 'Fixa', qty: '3', planned: 150.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-20', name: 'Caldo', group: 'Cachorros', type: 'Fixa', qty: '1', planned: 25.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-21', name: 'GR Pai', group: 'Casa', type: 'Variável', qty: '-', planned: 179.00, paid: 0, status: 'ABERTO', installmentCurrent: 9, installmentTotal: 10 },
-          { id: 'e-22', name: 'Carro Pai', group: 'Casa', type: 'Variável', qty: '-', planned: 290.00, paid: 0, status: 'ABERTO', installmentCurrent: 8, installmentTotal: 8 },
-          { id: 'e-23', name: 'Cirurgia Kiara', group: 'Casa', type: 'Variável', qty: '-', planned: 330.00, paid: 0, status: 'ABERTO', installmentCurrent: 4, installmentTotal: 10 },
-          { id: 'e-24', name: 'Barbeiro', group: 'Casa', type: 'Variável', qty: '-', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-25', name: 'Cabelo + Unha', group: 'Casa', type: 'Variável', qty: '-', planned: 200.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-26', name: 'Gás', group: 'Casa', type: 'Variável', qty: '-', planned: 0.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-27', name: 'iFood', group: 'Casa', type: 'Variável', qty: '-', planned: 0.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-28', name: 'Brinquedo', group: 'Ivy', type: 'Variável', qty: '-', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null },
-          { id: 'e-29', name: 'Roupa', group: 'Ivy', type: 'Variável', qty: '-', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null }
+          { id: 'e-01', name: 'Luz', group: 'Casa', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 510.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-02', name: 'Água', group: 'Casa', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 90.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-03', name: 'Net', group: 'Casa', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 179.93, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-04', name: 'Tim', group: 'Casa', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 259.99, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-05', name: 'Compras', group: 'Casa', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 1000.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-06', name: 'Carne', group: 'Casa', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '4', planned: 1120.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-07', name: 'Verdura', group: 'Casa', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '3', planned: 270.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-08', name: 'Água Galão', group: 'Casa', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '6', planned: 72.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-09', name: 'Leite', group: 'Ivy', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '4', planned: 269.95, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-10', name: 'Fralda', group: 'Ivy', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 150.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-11', name: 'Sabão', group: 'Ivy', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '1', planned: 40.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-12', name: 'Amaciante', group: 'Ivy', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '1', planned: 20.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-13', name: 'Sabonete', group: 'Ivy', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 35.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-14', name: 'Lenço', group: 'Ivy', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 40.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-15', name: 'Creme', group: 'Ivy', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 37.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-16', name: 'Banho', group: 'Cachorros', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 180.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-17', name: 'Ração', group: 'Cachorros', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '1', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-18', name: 'Tapete', group: 'Cachorros', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '1', planned: 90.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-19', name: 'Biscoito', group: 'Cachorros', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '3', planned: 150.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-20', name: 'Caldo', group: 'Cachorros', type: 'Fixa', owner: 'Compartilhado', dueDay: null, qty: '1', planned: 25.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-21', name: 'GR Pai', group: 'Casa', type: 'Variável', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 179.00, paid: 0, status: 'ABERTO', installmentCurrent: 9, installmentTotal: 10, entries: [] },
+          { id: 'e-22', name: 'Carro Pai', group: 'Casa', type: 'Variável', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 290.00, paid: 0, status: 'ABERTO', installmentCurrent: 8, installmentTotal: 8, entries: [] },
+          { id: 'e-23', name: 'Cirurgia Kiara', group: 'Casa', type: 'Variável', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 330.00, paid: 0, status: 'ABERTO', installmentCurrent: 4, installmentTotal: 10, entries: [] },
+          { id: 'e-24', name: 'Barbeiro', group: 'Casa', type: 'Variável', owner: 'Gabriel', dueDay: null, qty: '-', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-25', name: 'Cabelo + Unha', group: 'Casa', type: 'Variável', owner: 'Sabrina', dueDay: null, qty: '-', planned: 200.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-26', name: 'Gás', group: 'Casa', type: 'Variável', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 0.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-27', name: 'iFood', group: 'Casa', type: 'Variável', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 0.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-28', name: 'Brinquedo', group: 'Ivy', type: 'Variável', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] },
+          { id: 'e-29', name: 'Roupa', group: 'Ivy', type: 'Variável', owner: 'Compartilhado', dueDay: null, qty: '-', planned: 100.00, paid: 0, status: 'ABERTO', installmentCurrent: null, installmentTotal: null, entries: [] }
         ],
         updatedAt: Date.now()
       };
@@ -1769,11 +2215,14 @@
     // ===== STATE & DOM =====
     const state = {
       months: {},
+      goals: [],
       currentMonth: '2026-11',
       activeTab: 'lancamentos',
-      currentView: 'dashboard', // 'dashboard' | 'all-expenses'
+      currentView: 'dashboard',
       allExpFilter: 'ALL',
-      allExpMode: 'grouped', // 'grouped' | 'value'
+      allExpMode: 'grouped',
+      privacyMode: localStorage.getItem('financas_privacy') === '1',
+      selectedGoalColor: '#10b981',
       user: null,
       unsubSnapshot: null,
       seeding: false
@@ -1781,8 +2230,10 @@
 
     const $ = (id) => document.getElementById(id);
 
-    const fmtBRL = (v) =>
+    const fmtBRLRaw = (v) =>
       new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(v) || 0);
+
+    const fmtBRL = (v) => (state.privacyMode ? 'R$ •••••' : fmtBRLRaw(v));
 
     const MONTH_NAMES = [
       'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
@@ -1792,6 +2243,13 @@
     function formatMonthId(ym) {
       const [y, m] = ym.split('-').map(Number);
       return `${MONTH_NAMES[m - 1]} ${y}`;
+    }
+
+    function formatShortDate(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      if (isNaN(d.getTime())) return iso;
+      return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
     }
 
     function shiftMonthId(ym, delta) {
@@ -1826,6 +2284,66 @@
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+    }
+
+    // ===== MODO PRIVACIDADE =====
+    function updatePrivacyUI() {
+      $('privacyIconWrap').innerHTML = state.privacyMode ? ICON_EYE_OFF : ICON_EYE_OPEN;
+      $('privacyBtn').classList.toggle('privacy-on', state.privacyMode);
+    }
+    updatePrivacyUI();
+
+    $('privacyBtn').addEventListener('click', () => {
+      state.privacyMode = !state.privacyMode;
+      localStorage.setItem('financas_privacy', state.privacyMode ? '1' : '0');
+      updatePrivacyUI();
+      renderAll();
+      showToast(state.privacyMode ? 'Modo privacidade ativado' : 'Valores visíveis novamente');
+    });
+
+    // ===== VENCIMENTOS & ALERTAS =====
+    function getDueInfo(e, monthId) {
+      const dueDay = Number(e.dueDay);
+      if (!dueDay || dueDay < 1 || dueDay > 31) return null;
+
+      const [y, m] = monthId.split('-').map(Number);
+      const daysInMonth = new Date(y, m, 0).getDate();
+      const clampedDay = Math.min(dueDay, daysInMonth);
+      const dd = String(clampedDay).padStart(2, '0');
+
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const dueDate = new Date(y, m - 1, clampedDay);
+      const diff = Math.round((dueDate - today) / 86400000);
+
+      if (e.status === 'PAGO') {
+        return { label: `Dia ${dd}`, level: 'muted', diff, day: clampedDay };
+      }
+      if (diff < 0) {
+        return { label: `Atrasada · dia ${dd}`, level: 'overdue', diff, day: clampedDay };
+      }
+      if (diff === 0) {
+        return { label: 'Vence hoje', level: 'today', diff: 0, day: clampedDay };
+      }
+      if (diff === 1) {
+        return { label: 'Vence amanhã', level: 'soon', diff: 1, day: clampedDay };
+      }
+      if (diff <= 3) {
+        return { label: `Em ${diff} dias`, level: 'soon', diff, day: clampedDay };
+      }
+      return { label: `Dia ${dd}`, level: 'normal', diff, day: clampedDay };
+    }
+
+    function renderDueBadge(e, monthId) {
+      const info = getDueInfo(e, monthId);
+      if (!info) return '';
+      return `<span class="due-badge due-${info.level}">${ICON_CAL}${escapeHtml(info.label)}</span>`;
+    }
+
+    function renderOwnerBadge(e) {
+      const owner = e.owner || 'Compartilhado';
+      if (owner === 'Compartilhado') return '';
+      return `<span class="owner-badge owner-${escapeHtml(owner)}">${escapeHtml(owner)}</span>`;
     }
 
     // ===== VERIFICAR CONFIG FIREBASE =====
@@ -1905,7 +2423,7 @@
       if (auth) await signOut(auth);
     });
 
-    // ===== REALTIME FIRESTORE SYNC =====
+    // ===== REALTIME FIRESTORE SYNC (MESES + METAS NA MESMA COLEÇÃO) =====
     function startRealtimeSync() {
       if (state.unsubSnapshot) state.unsubSnapshot();
       setSyncStatus('saving', 'Conectando...');
@@ -1914,7 +2432,18 @@
       state.unsubSnapshot = onSnapshot(
         colRef,
         async (snapshot) => {
-          if (snapshot.empty && !state.seeding) {
+          const nextMonths = {};
+          let nextGoals = [];
+
+          snapshot.forEach((docSnap) => {
+            if (docSnap.id === GOALS_DOC_ID) {
+              nextGoals = docSnap.data().goals || [];
+            } else if (/^\d{4}-\d{2}$/.test(docSnap.id)) {
+              nextMonths[docSnap.id] = docSnap.data();
+            }
+          });
+
+          if (Object.keys(nextMonths).length === 0 && !state.seeding) {
             state.seeding = true;
             const nov = buildInitialNovember();
             try {
@@ -1928,11 +2457,8 @@
             return;
           }
 
-          const nextMonths = {};
-          snapshot.forEach((docSnap) => {
-            nextMonths[docSnap.id] = docSnap.data();
-          });
           state.months = nextMonths;
+          state.goals = nextGoals;
 
           const keys = Object.keys(nextMonths).sort();
           if (keys.length && !nextMonths[state.currentMonth]) {
@@ -1973,6 +2499,24 @@
       }
     }
 
+    async function saveGoals(nextGoals, toastMsg) {
+      state.goals = nextGoals;
+      renderAll();
+      setSyncStatus('saving', 'Salvando...');
+      try {
+        await setDoc(doc(db, 'meses', GOALS_DOC_ID), {
+          isMetaDoc: true,
+          goals: nextGoals,
+          updatedAt: Date.now(),
+          updatedBy: state.user?.email || ''
+        });
+        setSyncStatus('ok', 'Sincronizado');
+        if (toastMsg) showToast(toastMsg);
+      } catch (err) {
+        handleFirestoreError(err);
+      }
+    }
+
     function getCurrentMonthData() {
       return state.months[state.currentMonth] || {
         id: state.currentMonth,
@@ -2001,30 +2545,36 @@
     $('addExpenseFromAllBtn').addEventListener('click', () => openExpenseModal(null));
 
     // ===== CÁLCULOS =====
+    function calcExpenseAmounts(e) {
+      const planned = Number(e.planned) || 0;
+      const paidVal = e.status === 'PAGO'
+        ? (Number(e.paid) > 0 ? Number(e.paid) : planned)
+        : (Number(e.paid) || 0);
+      const effective = e.status === 'PAGO' ? paidVal : Math.max(planned, paidVal);
+      const openVal = e.status === 'PAGO' ? 0 : Math.max(0, planned - paidVal);
+      return { planned, paidVal, effective, openVal };
+    }
+
     function calcMetrics(m) {
       const totalIncome = (m.incomes || []).reduce((s, i) => s + (Number(i.amount) || 0), 0);
       const expenses = m.expenses || [];
       let totalFixed = 0, totalVar = 0, totalPaid = 0, totalOpen = 0;
 
       for (const e of expenses) {
-        const planned = Number(e.planned) || 0;
-        const paidVal = e.status === 'PAGO' ? (Number(e.paid) > 0 ? Number(e.paid) : planned) : (Number(e.paid) || 0);
-        const effective = e.status === 'PAGO' ? paidVal : planned;
+        const { paidVal, effective, openVal } = calcExpenseAmounts(e);
         if (e.type === 'Fixa') totalFixed += effective;
         else totalVar += effective;
-
-        if (e.status === 'PAGO') totalPaid += paidVal;
-        else totalOpen += Math.max(0, planned - paidVal);
+        totalPaid += paidVal;
+        totalOpen += openVal;
       }
 
       const totalExpenses = totalFixed + totalVar;
       const leftover = totalIncome - totalExpenses;
-      const bankNow = totalIncome - totalPaid;
       const expPct = totalIncome > 0 ? (totalExpenses / totalIncome) * 100 : 0;
       const savePct = totalIncome > 0 ? (leftover / totalIncome) * 100 : 0;
       const paidPct = totalExpenses > 0 ? (totalPaid / totalExpenses) * 100 : 0;
 
-      return { totalIncome, totalFixed, totalVar, totalExpenses, totalPaid, totalOpen, leftover, bankNow, expPct, savePct, paidPct };
+      return { totalIncome, totalFixed, totalVar, totalExpenses, totalPaid, totalOpen, leftover, expPct, savePct, paidPct };
     }
 
     // ===== RENDERIZAÇÃO =====
@@ -2051,10 +2601,90 @@
       $('kpiSavePct').textContent = `${k.savePct.toFixed(1)}% ${k.leftover >= 0 ? 'Poupado' : 'Déficit'}`;
       $('kpiSavePct').className = `kpi-chip ${k.leftover >= 0 ? 'green' : 'red'}`;
 
+      renderDueAlertBanner(m);
       renderExpensesList(m);
       renderParcelamentos(m);
+      renderGoals(k);
       renderAnalytics(m, k);
       renderAllExpensesView(m, k);
+    }
+
+    function renderDueAlertBanner(m) {
+      let overdue = 0, today = 0, soon = 0;
+      for (const e of (m.expenses || [])) {
+        if (e.status === 'PAGO') continue;
+        const info = getDueInfo(e, state.currentMonth);
+        if (!info) continue;
+        if (info.level === 'overdue') overdue++;
+        else if (info.level === 'today') today++;
+        else if (info.level === 'soon') soon++;
+      }
+
+      const el = $('dueAlertBanner');
+      el.classList.remove('due-warn', 'due-soon');
+
+      if (!overdue && !today && !soon) {
+        el.classList.add('hidden');
+        return;
+      }
+
+      const parts = [];
+      if (overdue) parts.push(`<strong>${overdue} atrasada${overdue > 1 ? 's' : ''}</strong>`);
+      if (today) parts.push(`<strong>${today} vence${today > 1 ? 'm' : ''} hoje</strong>`);
+      if (soon) parts.push(`${soon} nos próximos 3 dias`);
+
+      $('dueAlertText').innerHTML = `Atenção aos vencimentos: ${parts.join(' · ')}.`;
+      el.classList.add(overdue || today ? 'due-warn' : 'due-soon');
+      el.classList.remove('hidden');
+    }
+
+    $('dueAlertBanner').addEventListener('click', () => {
+      switchTab('lancamentos');
+      $('statusFilter').value = 'ABERTO';
+      $('sortFilter').value = 'due';
+      renderExpensesList(getCurrentMonthData());
+      $('tab-lancamentos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    function renderPartialMeter(e) {
+      if (e.status === 'PAGO') return '';
+      const paid = Number(e.paid) || 0;
+      const planned = Number(e.planned) || 0;
+      if (paid <= 0) return '';
+      if (planned <= 0) {
+        return `<div class="partial-meter"><div class="partial-meter-label"><span>Acumulado no mês</span><strong>${fmtBRL(paid)}</strong></div></div>`;
+      }
+      const pct = Math.min(100, (paid / planned) * 100);
+      const diff = planned - paid;
+      const isOver = diff < 0;
+      return `
+        <div class="partial-meter">
+          <div class="partial-meter-label">
+            <span>${fmtBRL(paid)} de ${fmtBRL(planned)}</span>
+            <strong class="${isOver ? 'over' : ''}">${isOver ? `Estourou ${fmtBRL(Math.abs(diff))}` : `Restam ${fmtBRL(diff)}`}</strong>
+          </div>
+          <div class="progress-track">
+            <div class="progress-bar ${isOver ? 'over' : ''}" style="width:${pct}%"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function sortExpenses(list, mode) {
+      const arr = [...list];
+      if (mode === 'due') {
+        arr.sort((a, b) => {
+          const aPaid = a.status === 'PAGO' ? 1 : 0;
+          const bPaid = b.status === 'PAGO' ? 1 : 0;
+          if (aPaid !== bPaid) return aPaid - bPaid;
+          const da = Number(a.dueDay) || 99;
+          const db = Number(b.dueDay) || 99;
+          return da - db;
+        });
+      } else if (mode === 'value') {
+        arr.sort((a, b) => calcExpenseAmounts(b).effective - calcExpenseAmounts(a).effective);
+      }
+      return arr;
     }
 
     function renderExpensesList(m) {
@@ -2062,28 +2692,34 @@
       const g = $('groupFilter').value;
       const t = $('typeFilter').value;
       const s = $('statusFilter').value;
+      const o = $('ownerFilter').value;
+      const sortMode = $('sortFilter').value;
 
-      const filtered = (m.expenses || []).filter((e) => {
-        if (q && !e.name.toLowerCase().includes(q) && !e.group.toLowerCase().includes(q)) return false;
+      const filtered = sortExpenses((m.expenses || []).filter((e) => {
+        const owner = e.owner || 'Compartilhado';
+        if (q && !e.name.toLowerCase().includes(q) && !e.group.toLowerCase().includes(q) && !(e.note || '').toLowerCase().includes(q)) return false;
         if (g !== 'ALL' && e.group !== g) return false;
         if (t !== 'ALL' && e.type !== t) return false;
         if (s !== 'ALL' && e.status !== s) return false;
+        if (o !== 'ALL' && owner !== o) return false;
         return true;
-      });
+      }), sortMode);
 
       const tbody = $('expensesTableBody');
       const mList = $('expensesMobileList');
 
       if (!filtered.length) {
-        tbody.innerHTML = `<tr><td colspan="8" class="empty-state">Nenhuma despesa encontrada com esses filtros.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="empty-state">Nenhuma despesa encontrada com esses filtros.</td></tr>`;
         mList.innerHTML = `<div class="panel-card empty-state">Nenhuma despesa encontrada com esses filtros.</div>`;
         return;
       }
 
       tbody.innerHTML = filtered.map((e) => {
         const isPaid = e.status === 'PAGO';
-        const parcelInfo = e.installmentTotal ? `${String(e.installmentCurrent).padStart(2, '0')}/${String(e.installmentTotal).padStart(2, '0')}` : (e.qty || '-');
-        const paidDisplay = isPaid ? (Number(e.paid) > 0 ? Number(e.paid) : Number(e.planned)) : Number(e.paid || 0);
+        const { paidVal } = calcExpenseAmounts(e);
+        const parcelInfo = e.installmentTotal ? `${String(e.installmentCurrent).padStart(2, '0')}/${String(e.installmentTotal).padStart(2, '0')}` : '';
+        const dueBadge = renderDueBadge(e, state.currentMonth);
+        const ownerBadge = renderOwnerBadge(e);
         return `
           <tr class="${isPaid ? 'is-paid' : ''}">
             <td>
@@ -2092,17 +2728,26 @@
               </button>
             </td>
             <td class="item-name">
-              <strong>${escapeHtml(e.name)}</strong>
-              ${e.installmentTotal ? `<span class="parcel-tag">${parcelInfo}</span>` : ''}
+              <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px">
+                <strong>${escapeHtml(e.name)}</strong>
+                ${parcelInfo ? `<span class="parcel-tag">${parcelInfo}</span>` : ''}
+                <span class="muted" style="font-size:0.75rem">${escapeHtml(e.type)}</span>
+              </div>
               ${e.note ? `<div class="item-note">${escapeHtml(e.note)}</div>` : ''}
+              ${renderPartialMeter(e)}
             </td>
-            <td><span class="group-badge group-${escapeHtml(e.group)}">${escapeHtml(e.group)}</span></td>
-            <td class="muted">${escapeHtml(e.type)}</td>
-            <td class="muted">${escapeHtml(parcelInfo)}</td>
+            <td>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;align-items:center">
+                <span class="group-badge group-${escapeHtml(e.group)}">${escapeHtml(e.group)}</span>
+                ${ownerBadge}
+              </div>
+            </td>
+            <td>${dueBadge || '<span class="muted">—</span>'}</td>
             <td class="num"><strong>${fmtBRL(e.planned)}</strong></td>
-            <td class="num ${isPaid ? '' : 'muted'}">${fmtBRL(paidDisplay)}</td>
+            <td class="num ${paidVal > 0 ? '' : 'muted'}">${fmtBRL(paidVal)}</td>
             <td class="num">
               <div class="row-actions">
+                <button class="quick-add-btn" data-action="quick-add" data-id="${e.id}" title="Somar gasto fracionado">+ R$</button>
                 <button class="icon-btn" data-action="edit" data-id="${e.id}" title="Editar">${ICON_EDIT}</button>
                 <button class="icon-btn del" data-action="delete" data-id="${e.id}" title="Excluir">${ICON_TRASH}</button>
               </div>
@@ -2113,8 +2758,10 @@
 
       mList.innerHTML = filtered.map((e) => {
         const isPaid = e.status === 'PAGO';
+        const { paidVal } = calcExpenseAmounts(e);
         const parcelInfo = e.installmentTotal ? `Parcela ${String(e.installmentCurrent).padStart(2, '0')}/${String(e.installmentTotal).padStart(2, '0')}` : (e.qty && e.qty !== '-' ? `Qtde: ${e.qty}` : '');
-        const paidDisplay = isPaid ? (Number(e.paid) > 0 ? Number(e.paid) : Number(e.planned)) : Number(e.paid || 0);
+        const dueBadge = renderDueBadge(e, state.currentMonth);
+        const ownerBadge = renderOwnerBadge(e);
         return `
           <div class="m-card">
             <div class="m-card-top">
@@ -2125,16 +2772,20 @@
             </div>
             <div class="m-card-meta">
               <span class="group-badge group-${escapeHtml(e.group)}">${escapeHtml(e.group)}</span>
+              ${ownerBadge}
               <span>${escapeHtml(e.type)}</span>
+              ${dueBadge}
               ${parcelInfo ? `<span class="parcel-tag">${escapeHtml(parcelInfo)}</span>` : ''}
             </div>
-            ${e.note ? `<div class="item-note" style="margin:-4px 0 10px">${escapeHtml(e.note)}</div>` : ''}
-            <div class="m-card-bottom">
+            ${e.note ? `<div class="item-note" style="margin:-4px 0 8px">${escapeHtml(e.note)}</div>` : ''}
+            ${renderPartialMeter(e)}
+            <div class="m-card-bottom" style="margin-top:${!isPaid && paidVal > 0 ? '10px' : '0'}">
               <div class="m-values">
                 <div><span>Previsto</span><strong>${fmtBRL(e.planned)}</strong></div>
-                <div><span>Pago</span><strong style="color:${isPaid ? '#34d399' : '#94a3b8'}">${fmtBRL(paidDisplay)}</strong></div>
+                <div><span>Pago</span><strong style="color:${paidVal > 0 ? '#34d399' : '#94a3b8'}">${fmtBRL(paidVal)}</strong></div>
               </div>
               <div class="row-actions">
+                <button class="quick-add-btn" data-action="quick-add" data-id="${e.id}" aria-label="Somar gasto">+ R$</button>
                 <button class="icon-btn" data-action="edit" data-id="${e.id}" aria-label="Editar">${ICON_EDIT}</button>
                 <button class="icon-btn del" data-action="delete" data-id="${e.id}" aria-label="Excluir">${ICON_TRASH}</button>
               </div>
@@ -2154,8 +2805,10 @@
 
       const f = state.allExpFilter;
       const list = all.filter((e) => {
+        const owner = e.owner || 'Compartilhado';
         if (f === 'Fixa' || f === 'Variável') return e.type === f;
         if (f === 'ABERTO' || f === 'PAGO') return e.status === f;
+        if (f === 'Gabriel' || f === 'Sabrina') return owner === f;
         return true;
       });
 
@@ -2167,25 +2820,30 @@
 
       const renderRow = (e) => {
         const isPaid = e.status === 'PAGO';
-        const effective = isPaid && Number(e.paid) > 0 ? Number(e.paid) : Number(e.planned || 0);
+        const { effective, paidVal } = calcExpenseAmounts(e);
         const parcelInfo = e.installmentTotal ? `${String(e.installmentCurrent).padStart(2, '0')}/${String(e.installmentTotal).padStart(2, '0')}` : '';
-        const qtyInfo = !parcelInfo && e.qty && e.qty !== '-' ? `Qtde: ${e.qty}` : '';
+        const dueBadge = renderDueBadge(e, state.currentMonth);
+        const ownerBadge = renderOwnerBadge(e);
         return `
           <div class="group-section-row">
             <div class="group-row-info">
               <div class="group-row-title">
                 <span>${escapeHtml(e.name)}</span>
                 ${parcelInfo ? `<span class="parcel-tag">${parcelInfo}</span>` : ''}
+                ${ownerBadge}
+                ${dueBadge}
               </div>
               <div class="group-row-sub">
-                ${state.allExpMode === 'value' ? `${escapeHtml(e.group)} · ` : ''}${escapeHtml(e.type)}${qtyInfo ? ` · ${escapeHtml(qtyInfo)}` : ''}${e.note ? ` · ${escapeHtml(e.note)}` : ''}
+                ${state.allExpMode !== 'grouped' ? `${escapeHtml(e.group)} · ` : ''}${escapeHtml(e.type)}${e.note ? ` · ${escapeHtml(e.note)}` : ''}
               </div>
+              ${renderPartialMeter(e)}
             </div>
             <div class="group-row-right">
               <div class="group-row-price">
                 <strong>${fmtBRL(effective)}</strong>
-                <span>${isPaid ? 'Pago' : 'Previsto'}</span>
+                <span>${isPaid ? 'Pago' : (paidVal > 0 ? `Pago ${fmtBRL(paidVal)}` : 'Previsto')}</span>
               </div>
+              <button class="quick-add-btn" data-action="quick-add" data-id="${e.id}">+ R$</button>
               <button class="status-pill ${isPaid ? 'pago' : 'aberto'}" data-action="toggle" data-id="${e.id}">
                 ${isPaid ? 'PAGO' : 'ABERTO'}
               </button>
@@ -2195,14 +2853,15 @@
         `;
       };
 
-      if (state.allExpMode === 'value') {
-        const sorted = [...list].sort((a, b) => (Number(b.planned) || 0) - (Number(a.planned) || 0));
-        const sub = sorted.reduce((s, e) => s + (e.status === 'PAGO' && Number(e.paid) > 0 ? Number(e.paid) : Number(e.planned || 0)), 0);
+      if (state.allExpMode === 'value' || state.allExpMode === 'due') {
+        const sorted = sortExpenses(list, state.allExpMode);
+        const sub = sorted.reduce((s, e) => s + calcExpenseAmounts(e).effective, 0);
+        const heading = state.allExpMode === 'due' ? 'Ordenadas por vencimento' : 'Todas ordenadas por valor';
         container.innerHTML = `
           <div class="group-section">
             <div class="group-section-head">
               <div class="group-section-head-left">
-                <strong>Todas ordenadas por valor</strong>
+                <strong>${heading}</strong>
                 <span class="muted" style="font-size:0.8rem">(${sorted.length} itens)</span>
               </div>
               <strong>${fmtBRL(sub)}</strong>
@@ -2213,7 +2872,6 @@
         return;
       }
 
-      // Modo agrupado por categoria (Casa, Ivy, Cachorros, Outros)
       const order = ['Casa', 'Ivy', 'Cachorros', 'Outros'];
       const groups = {};
       for (const e of list) {
@@ -2230,7 +2888,7 @@
 
       container.innerHTML = groupNames.map((gName) => {
         const items = groups[gName];
-        const sub = items.reduce((s, e) => s + (e.status === 'PAGO' && Number(e.paid) > 0 ? Number(e.paid) : Number(e.planned || 0)), 0);
+        const sub = items.reduce((s, e) => s + calcExpenseAmounts(e).effective, 0);
         return `
           <div class="group-section">
             <div class="group-section-head">
@@ -2309,12 +2967,139 @@
       $('reliefTimeline').innerHTML = rows;
     }
 
+    // ===== METAS & CAIXINHAS =====
+    function renderGoals(k) {
+      const goals = state.goals || [];
+      const totalSaved = goals.reduce((s, g) => s + (Number(g.saved) || 0), 0);
+
+      $('goalsTotalSaved').textContent = fmtBRL(totalSaved);
+      $('goalsCountChip').textContent = `${goals.length} ${goals.length === 1 ? 'caixinha' : 'caixinhas'}`;
+      $('goalsMonthTag').textContent = formatMonthId(state.currentMonth);
+      $('goalsMonthLeftover').textContent = fmtBRL(k.leftover);
+      $('goalsMonthLeftover').className = `kpi-value ${k.leftover >= 0 ? 'green' : 'red'}`;
+
+      const container = $('goalsContainer');
+      if (!goals.length) {
+        container.innerHTML = `
+          <div class="panel-card empty-state">
+            <p style="margin-bottom:6px;color:var(--text);font-weight:700">Nenhuma caixinha criada ainda</p>
+            <p style="font-size:0.86rem">Crie metas compartilhadas para guardar a sobra do mês com propósito — ou comece com uma sugestão:</p>
+            <div class="starter-chips">
+              <button class="btn-ghost" data-starter="Reserva de Emergência|15000|#10b981">+ Reserva de Emergência</button>
+              <button class="btn-ghost" data-starter="Fundo da Ivy|5000|#8b5cf6">+ Fundo da Ivy</button>
+              <button class="btn-ghost" data-starter="Viagem em Família|4000|#06b6d4">+ Viagem em Família</button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = `<div class="goals-grid">${goals.map((g) => {
+        const saved = Number(g.saved) || 0;
+        const target = Number(g.target) || 0;
+        const pct = target > 0 ? Math.min(100, (saved / target) * 100) : 0;
+        const remaining = Math.max(0, target - saved);
+        const color = g.color || '#10b981';
+        const recent = (g.history || []).slice(0, 3);
+
+        return `
+          <div class="goal-card">
+            <div class="goal-card-accent" style="background:${escapeHtml(color)}"></div>
+            <div class="goal-head">
+              <div>
+                <div class="goal-title">${escapeHtml(g.name)}</div>
+                <div class="goal-target">${target > 0 ? `Meta: ${fmtBRL(target)}` : 'Caixinha livre (sem teto)'}</div>
+              </div>
+              <div class="row-actions">
+                <button class="icon-btn" data-goal-action="edit" data-id="${g.id}" title="Editar">${ICON_EDIT}</button>
+                <button class="icon-btn del" data-goal-action="delete" data-id="${g.id}" title="Excluir">${ICON_TRASH}</button>
+              </div>
+            </div>
+
+            <div class="goal-amount" style="color:${escapeHtml(color)}">${fmtBRL(saved)}</div>
+
+            ${target > 0 ? `
+              <div class="progress-track" style="height:8px">
+                <div class="progress-bar" style="width:${pct}%;background:${escapeHtml(color)}"></div>
+              </div>
+              <div class="goal-meta">
+                <span>${pct.toFixed(1)}% concluído</span>
+                <strong>${remaining === 0 ? 'Meta atingida!' : `Faltam ${fmtBRL(remaining)}`}</strong>
+              </div>
+            ` : ''}
+
+            <div class="goal-actions">
+              <button class="goal-btn-add" data-goal-action="deposit" data-id="${g.id}">+ Guardar</button>
+              <button class="goal-btn-sub" data-goal-action="withdraw" data-id="${g.id}">− Resgatar</button>
+            </div>
+
+            ${recent.length ? `
+              <div class="goal-recent">
+                ${recent.map((h) => `
+                  <div class="goal-recent-item">
+                    <span>${formatShortDate(h.date)}${h.note ? ` · ${escapeHtml(h.note)}` : ''}</span>
+                    <strong style="color:${h.type === 'withdraw' ? '#fda4af' : '#6ee7b7'}">${h.type === 'withdraw' ? '−' : '+'}${fmtBRL(h.amount)}</strong>
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('')}</div>`;
+    }
+
     function renderAnalytics(m, k) {
+      // 1. Divisão do Casal
+      const incomes = m.incomes || [];
+      const gabInc = incomes.filter((i) => i.name.toLowerCase().includes('gabriel')).reduce((s, i) => s + (Number(i.amount) || 0), 0);
+      const sabInc = incomes.filter((i) => i.name.toLowerCase().includes('sabrina')).reduce((s, i) => s + (Number(i.amount) || 0), 0);
+
+      const split = {
+        Gabriel: { total: 0, paid: 0, open: 0, count: 0, income: gabInc, color: '#3b82f6' },
+        Sabrina: { total: 0, paid: 0, open: 0, count: 0, income: sabInc, color: '#ec4899' },
+        Compartilhado: { total: 0, paid: 0, open: 0, count: 0, income: k.totalIncome, color: '#8b5cf6' }
+      };
+
+      for (const e of (m.expenses || [])) {
+        const key = split[e.owner] ? e.owner : 'Compartilhado';
+        const { effective, paidVal, openVal } = calcExpenseAmounts(e);
+        split[key].total += effective;
+        split[key].paid += paidVal;
+        split[key].open += openVal;
+        split[key].count++;
+      }
+
+      $('coupleSplitContainer').innerHTML = `
+        <div class="couple-grid">
+          ${Object.entries(split).map(([name, info]) => {
+            const pctOfExp = k.totalExpenses > 0 ? (info.total / k.totalExpenses) * 100 : 0;
+            const pctOfOwnInc = info.income > 0 ? (info.total / info.income) * 100 : 0;
+            return `
+              <div class="couple-box">
+                <div class="couple-box-head">
+                  <span style="color:${info.color}">${name}</span>
+                  <span class="muted">${info.count} ${info.count === 1 ? 'conta' : 'contas'}</span>
+                </div>
+                <div class="couple-box-val">${fmtBRL(info.total)}</div>
+                <div class="couple-box-sub">
+                  Pago: <strong style="color:#34d399">${fmtBRL(info.paid)}</strong> · Falta: <strong style="color:#fbbf24">${fmtBRL(info.open)}</strong><br/>
+                  ${pctOfExp.toFixed(1)}% dos gastos${name !== 'Compartilhado' && info.income > 0 ? ` · ${pctOfOwnInc.toFixed(1)}% da renda própria` : ''}
+                </div>
+                <div class="progress-track" style="height:5px;margin-top:8px">
+                  <div class="progress-bar" style="width:${pctOfExp}%;background:${info.color}"></div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      // 2. Donut por Grupo
       const colors = { Casa: '#3b82f6', Ivy: '#8b5cf6', Cachorros: '#06b6d4', Outros: '#94a3b8' };
       const groups = {};
       for (const e of (m.expenses || [])) {
-        const val = e.status === 'PAGO' && Number(e.paid) > 0 ? Number(e.paid) : (Number(e.planned) || 0);
-        groups[e.group] = (groups[e.group] || 0) + val;
+        const { effective } = calcExpenseAmounts(e);
+        groups[e.group] = (groups[e.group] || 0) + effective;
       }
       const entries = Object.entries(groups).filter(([, v]) => v > 0).sort((a, b) => b[1] - a[1]);
       const sum = entries.reduce((s, [, v]) => s + v, 0);
@@ -2356,6 +3141,7 @@
         `;
       }
 
+      // 3. Fixas vs Variáveis
       const fPct = k.totalExpenses > 0 ? (k.totalFixed / k.totalExpenses) * 100 : 0;
       const vPct = k.totalExpenses > 0 ? (k.totalVar / k.totalExpenses) * 100 : 0;
       $('fixedVarContainer').innerHTML = `
@@ -2373,6 +3159,7 @@
         </div>
       `;
 
+      // 4. Histórico mensal
       const keys = Object.keys(state.months).sort();
       const maxVal = Math.max(1, ...keys.map((id) => {
         const mm = calcMetrics(state.months[id]);
@@ -2414,12 +3201,16 @@
         const item = m.expenses[idx];
         if (item.status === 'PAGO') {
           item.status = 'ABERTO';
-          item.paid = 0;
+          // Se houver entradas parciais registradas, volta ao somatório delas; senão zera
+          const entriesSum = (item.entries || []).reduce((s, x) => s + (Number(x.amount) || 0), 0);
+          item.paid = entriesSum;
         } else {
           item.status = 'PAGO';
           item.paid = Number(item.paid) > 0 ? Number(item.paid) : Number(item.planned);
         }
         saveMonth(state.currentMonth, m, `${item.name}: ${item.status}`);
+      } else if (action === 'quick-add') {
+        openQuickAddModal(m.expenses[idx]);
       } else if (action === 'edit') {
         openExpenseModal(m.expenses[idx]);
       } else if (action === 'delete') {
@@ -2433,6 +3224,275 @@
     $('expensesTableBody').addEventListener('click', handleExpenseAction);
     $('expensesMobileList').addEventListener('click', handleExpenseAction);
     $('allExpensesContent').addEventListener('click', handleExpenseAction);
+
+    // ===== SOMA RÁPIDA (+ R$) =====
+    function renderQuickAddModalBody(item) {
+      const planned = Number(item.planned) || 0;
+      const paid = Number(item.paid) || 0;
+      const pct = planned > 0 ? Math.min(100, (paid / planned) * 100) : (paid > 0 ? 100 : 0);
+      const diff = planned - paid;
+
+      $('quickAddTitle').textContent = `Somar gasto — ${item.name}`;
+      $('quickAddExpId').value = item.id;
+      $('quickAddCurrentVal').textContent = fmtBRL(paid);
+      $('quickAddBudgetInfo').textContent = planned > 0 ? `Teto: ${fmtBRL(planned)}` : 'Sem teto definido';
+      $('quickAddBar').style.width = `${pct}%`;
+      $('quickAddBar').classList.toggle('over', planned > 0 && diff < 0);
+
+      if (planned > 0) {
+        $('quickAddRemaining').innerHTML = diff >= 0
+          ? `Ainda restam <strong>${fmtBRL(diff)}</strong> dentro do previsto.`
+          : `<span style="color:#fb7185">Ultrapassou o previsto em <strong>${fmtBRL(Math.abs(diff))}</strong>.</span>`;
+      } else {
+        $('quickAddRemaining').textContent = 'Cada valor somado entra automaticamente nas despesas do mês.';
+      }
+
+      const entries = item.entries || [];
+      $('quickAddHistoryWrap').classList.toggle('hidden', entries.length === 0);
+      $('quickAddHistoryList').innerHTML = entries.map((en) => `
+        <div class="history-entry">
+          <div>
+            <strong>+${fmtBRL(en.amount)}</strong>${en.note ? ` · ${escapeHtml(en.note)}` : ''}
+            <div class="history-entry-meta">${formatShortDate(en.date)}${en.by ? ` · ${escapeHtml(en.by.split('@')[0])}` : ''}</div>
+          </div>
+          <button type="button" class="icon-btn del" data-del-entry="${en.id}" title="Remover lançamento">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function openQuickAddModal(item) {
+      $('quickAddAmount').value = '';
+      $('quickAddNote').value = '';
+      $('quickAddMarkPaid').checked = item.status === 'PAGO';
+      renderQuickAddModalBody(item);
+      $('quickAddModal').classList.remove('hidden');
+      setTimeout(() => $('quickAddAmount').focus(), 40);
+    }
+
+    $('quickAddForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = $('quickAddExpId').value;
+      const addVal = parseFloat($('quickAddAmount').value) || 0;
+      if (addVal <= 0) return;
+
+      const note = $('quickAddNote').value.trim();
+      const markPaid = $('quickAddMarkPaid').checked;
+      const m = structuredClone(getCurrentMonthData());
+      const item = m.expenses.find((x) => x.id === id);
+      if (!item) return;
+
+      if (!Array.isArray(item.entries)) item.entries = [];
+      item.entries.unshift({
+        id: uid('ent'),
+        amount: addVal,
+        note,
+        date: new Date().toISOString(),
+        by: state.user?.email || ''
+      });
+      item.paid = Number(((Number(item.paid) || 0) + addVal).toFixed(2));
+      if (markPaid) item.status = 'PAGO';
+
+      saveMonth(state.currentMonth, m, `+${fmtBRLRaw(addVal)} somado em ${item.name}!`);
+      $('quickAddAmount').value = '';
+      $('quickAddNote').value = '';
+      renderQuickAddModalBody(item);
+    });
+
+    $('quickAddHistoryList').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-del-entry]');
+      if (!btn) return;
+      const entryId = btn.dataset.delEntry;
+      const expId = $('quickAddExpId').value;
+      const m = structuredClone(getCurrentMonthData());
+      const item = m.expenses.find((x) => x.id === expId);
+      if (!item || !Array.isArray(item.entries)) return;
+
+      const idx = item.entries.findIndex((x) => x.id === entryId);
+      if (idx === -1) return;
+      const removed = item.entries.splice(idx, 1)[0];
+      item.paid = Math.max(0, Number(((Number(item.paid) || 0) - (Number(removed.amount) || 0)).toFixed(2)));
+
+      saveMonth(state.currentMonth, m, `Lançamento removido de ${item.name}.`);
+      renderQuickAddModalBody(item);
+    });
+
+    // ===== AÇÕES EM METAS / CAIXINHAS =====
+    $('addGoalBtn').addEventListener('click', () => openGoalModal(null));
+
+    $('goalsContainer').addEventListener('click', (e) => {
+      const starter = e.target.closest('button[data-starter]');
+      if (starter) {
+        const [name, target, color] = starter.dataset.starter.split('|');
+        const nextGoals = structuredClone(state.goals || []);
+        nextGoals.push({
+          id: uid('goal'),
+          name,
+          target: parseFloat(target) || 0,
+          saved: 0,
+          color,
+          history: []
+        });
+        saveGoals(nextGoals, `Caixinha "${name}" criada!`);
+        return;
+      }
+
+      const btn = e.target.closest('button[data-goal-action]');
+      if (!btn) return;
+      const action = btn.dataset.goalAction;
+      const id = btn.dataset.id;
+      const goal = (state.goals || []).find((g) => g.id === id);
+      if (!goal) return;
+
+      if (action === 'edit') {
+        openGoalModal(goal);
+      } else if (action === 'delete') {
+        if (!confirm(`Excluir a caixinha "${goal.name}"?`)) return;
+        const next = (state.goals || []).filter((g) => g.id !== id);
+        saveGoals(next, `"${goal.name}" removida.`);
+      } else if (action === 'deposit' || action === 'withdraw') {
+        openGoalMoveModal(goal, action);
+      }
+    });
+
+    function openGoalModal(goal = null) {
+      $('goalModalTitle').textContent = goal ? 'Editar Caixinha' : 'Nova Caixinha';
+      $('goalId').value = goal ? goal.id : '';
+      $('goalName').value = goal ? goal.name : '';
+      $('goalTarget').value = goal && goal.target > 0 ? goal.target : '';
+      $('goalSaved').value = goal ? (goal.saved || 0) : 0;
+      state.selectedGoalColor = goal?.color || '#10b981';
+      $('goalColorSwatches').querySelectorAll('.color-swatch').forEach((sw) => {
+        sw.classList.toggle('active', sw.dataset.color === state.selectedGoalColor);
+      });
+      $('goalModal').classList.remove('hidden');
+      setTimeout(() => $('goalName').focus(), 40);
+    }
+
+    $('goalColorSwatches').addEventListener('click', (e) => {
+      const sw = e.target.closest('.color-swatch');
+      if (!sw) return;
+      state.selectedGoalColor = sw.dataset.color;
+      $('goalColorSwatches').querySelectorAll('.color-swatch').forEach((b) => b.classList.toggle('active', b === sw));
+    });
+
+    $('goalForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = $('goalId').value;
+      const name = $('goalName').value.trim();
+      const target = parseFloat($('goalTarget').value) || 0;
+      const saved = parseFloat($('goalSaved').value) || 0;
+      const next = structuredClone(state.goals || []);
+
+      if (id) {
+        const idx = next.findIndex((g) => g.id === id);
+        if (idx >= 0) {
+          next[idx] = { ...next[idx], name, target, saved, color: state.selectedGoalColor };
+        }
+      } else {
+        next.push({
+          id: uid('goal'),
+          name,
+          target,
+          saved,
+          color: state.selectedGoalColor,
+          history: saved > 0 ? [{ id: uid('gh'), amount: saved, type: 'deposit', note: 'Saldo inicial', date: new Date().toISOString() }] : []
+        });
+      }
+
+      $('goalModal').classList.add('hidden');
+      saveGoals(next, id ? 'Caixinha atualizada!' : 'Caixinha criada!');
+    });
+
+    function renderGoalMoveHistory(goal) {
+      const list = goal.history || [];
+      $('goalMoveHistoryWrap').classList.toggle('hidden', list.length === 0);
+      $('goalMoveHistoryList').innerHTML = list.map((h) => `
+        <div class="history-entry">
+          <div>
+            <strong style="color:${h.type === 'withdraw' ? '#fda4af' : '#6ee7b7'}">${h.type === 'withdraw' ? '−' : '+'}${fmtBRL(h.amount)}</strong>${h.note ? ` · ${escapeHtml(h.note)}` : ''}
+            <div class="history-entry-meta">${formatShortDate(h.date)}</div>
+          </div>
+          <button type="button" class="icon-btn del" data-del-gh="${h.id}" title="Desfazer movimentação">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function openGoalMoveModal(goal, type) {
+      const isDep = type === 'deposit';
+      $('goalMoveId').value = goal.id;
+      $('goalMoveType').value = type;
+      $('goalMoveTitle').textContent = isDep ? `Guardar em ${goal.name}` : `Resgatar de ${goal.name}`;
+      $('goalMoveAmountLabel').textContent = isDep ? 'Quanto deseja guardar? (R$)' : 'Quanto deseja resgatar? (R$)';
+      $('goalMoveSubmitBtn').textContent = isDep ? '+ Confirmar depósito' : '− Confirmar resgate';
+      $('goalMoveAmount').value = '';
+      $('goalMoveNote').value = isDep ? `Sobra ${formatMonthId(state.currentMonth)}` : '';
+
+      const k = calcMetrics(getCurrentMonthData());
+      if (isDep && k.leftover > 0) {
+        $('useLeftoverChip').textContent = `Usar sobra do mês (${fmtBRL(k.leftover)})`;
+        $('useLeftoverChip').dataset.val = k.leftover.toFixed(2);
+        $('goalLeftoverQuickWrap').classList.remove('hidden');
+      } else {
+        $('goalLeftoverQuickWrap').classList.add('hidden');
+      }
+
+      renderGoalMoveHistory(goal);
+      $('goalMoveModal').classList.remove('hidden');
+      setTimeout(() => $('goalMoveAmount').focus(), 40);
+    }
+
+    $('useLeftoverChip').addEventListener('click', () => {
+      $('goalMoveAmount').value = $('useLeftoverChip').dataset.val || '';
+    });
+
+    $('goalMoveForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = $('goalMoveId').value;
+      const type = $('goalMoveType').value;
+      const amount = parseFloat($('goalMoveAmount').value) || 0;
+      if (amount <= 0) return;
+
+      const note = $('goalMoveNote').value.trim();
+      const next = structuredClone(state.goals || []);
+      const goal = next.find((g) => g.id === id);
+      if (!goal) return;
+
+      if (!Array.isArray(goal.history)) goal.history = [];
+      goal.history.unshift({
+        id: uid('gh'),
+        amount,
+        type,
+        note,
+        date: new Date().toISOString(),
+        by: state.user?.email || ''
+      });
+      goal.saved = type === 'withdraw'
+        ? Math.max(0, Number(((Number(goal.saved) || 0) - amount).toFixed(2)))
+        : Number(((Number(goal.saved) || 0) + amount).toFixed(2));
+
+      $('goalMoveModal').classList.add('hidden');
+      saveGoals(next, type === 'withdraw' ? `Resgatado de ${goal.name}!` : `Guardado em ${goal.name}!`);
+    });
+
+    $('goalMoveHistoryList').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-del-gh]');
+      if (!btn) return;
+      const ghId = btn.dataset.delGh;
+      const goalId = $('goalMoveId').value;
+      const next = structuredClone(state.goals || []);
+      const goal = next.find((g) => g.id === goalId);
+      if (!goal || !Array.isArray(goal.history)) return;
+
+      const idx = goal.history.findIndex((h) => h.id === ghId);
+      if (idx === -1) return;
+      const removed = goal.history.splice(idx, 1)[0];
+      goal.saved = removed.type === 'withdraw'
+        ? Number(((Number(goal.saved) || 0) + (Number(removed.amount) || 0)).toFixed(2))
+        : Math.max(0, Number(((Number(goal.saved) || 0) - (Number(removed.amount) || 0)).toFixed(2)));
+
+      saveGoals(next, 'Movimentação desfeita.');
+      renderGoalMoveHistory(goal);
+    });
 
     // Filtros da tela "Todas as Despesas do Mês"
     $('allExpFilterPills').addEventListener('click', (e) => {
@@ -2454,28 +3514,28 @@
     });
 
     // ===== MODAL DESPESA (SIMPLIFICADO E INTUITIVO) =====
-    let instValueMode = 'parcel'; // 'parcel' | 'total'
+    let instValueMode = 'parcel';
 
     function syncExpenseFormUI() {
       const status = $('expStatus').value;
+      const owner = $('expOwner').value;
       const isPaid = status === 'PAGO';
       const isInst = $('expIsInstallment').checked;
 
-      // Atualiza botões de status
+      $('expOwnerSeg').querySelectorAll('.seg-btn').forEach((b) => {
+        b.classList.toggle('active', b.dataset.owner === owner);
+      });
+
       $('expStatusSeg').querySelectorAll('.seg-btn').forEach((b) => {
         b.classList.toggle('active', b.dataset.val === status);
       });
 
-      // Mostra "Quanto saiu na prática?" apenas se Já Pago; mostra "Pagamento parcial" apenas se Em Aberto
       $('paidAmountBox').classList.toggle('hidden', !isPaid);
       $('partialPaidField').classList.toggle('hidden', isPaid);
-
-      // Mostra painel de parcelamento apenas quando ativado
       $('installmentBox').classList.toggle('hidden', !isInst);
 
-      // Atualiza rótulo e observação do campo principal de valor
       if (isInst) {
-        $('expPlannedLabel').textContent = 'Valor da parcela mensal (R$)';
+        $('expPlannedLabel').textContent = 'Valor da parcela (R$)';
         $('expPlannedHint').textContent = instValueMode === 'total'
           ? 'Calculado automaticamente a partir do valor total dividido pelas parcelas.'
           : 'Informe o valor de 1 parcela por mês (não o valor total da compra).';
@@ -2484,13 +3544,11 @@
         $('expPlannedHint').textContent = 'Valor fixo ou estimado desta conta neste mês.';
       }
 
-      // Modo de cálculo da parcela
       $('instValueModeSeg').querySelectorAll('.seg-btn').forEach((b) => {
         b.classList.toggle('active', b.dataset.mode === instValueMode);
       });
       $('instTotalCalcField').classList.toggle('hidden', !isInst || instValueMode !== 'total');
 
-      // Recalcula parcela automaticamente se modo = 'total'
       if (isInst && instValueMode === 'total') {
         const totalPurchase = parseFloat($('expTotalPurchase').value) || 0;
         const totParc = parseInt($('expInstTot').value, 10) || 0;
@@ -2499,7 +3557,6 @@
         }
       }
 
-      // Atualiza texto explicativo ao vivo do parcelamento
       if (isInst) {
         const val = parseFloat($('expPlanned').value) || 0;
         const cur = parseInt($('expInstCur').value, 10) || 1;
@@ -2508,8 +3565,8 @@
           const remaining = Math.max(0, tot - cur);
           const remTotal = remaining * val;
           $('installmentLiveText').innerHTML = remaining === 0
-            ? `<strong>Última parcela (${cur}/${tot}):</strong> entra ${fmtBRL(val)} neste mês e some automaticamente no próximo mês.`
-            : `Entra <strong>${fmtBRL(val)}/mês</strong> (parcela ${cur}/${tot}). Após este mês faltam <strong>${remaining} parcela(s) (${fmtBRL(remTotal)})</strong> — o app avança sozinho todo mês.`;
+            ? `<strong>Última parcela (${cur}/${tot}):</strong> entra ${fmtBRLRaw(val)} neste mês e some automaticamente no próximo mês.`
+            : `Entra <strong>${fmtBRLRaw(val)}/mês</strong> (parcela ${cur}/${tot}). Após este mês faltam <strong>${remaining} parcela(s) (${fmtBRLRaw(remTotal)})</strong> — o app avança sozinho todo mês.`;
         } else {
           $('installmentLiveText').innerHTML = `Informe sempre o valor de <strong>1 parcela mensal</strong> (ou use "Dividir valor total"). Ao gerar o próximo mês, o app avança a parcela e remove sozinho quando acabar.`;
         }
@@ -2520,6 +3577,13 @@
       $('moreDetailsBox').classList.toggle('hidden', !open);
       $('toggleMoreDetailsBtn').classList.toggle('open', open);
     }
+
+    $('expOwnerSeg').addEventListener('click', (e) => {
+      const btn = e.target.closest('.seg-btn');
+      if (!btn) return;
+      $('expOwner').value = btn.dataset.owner;
+      syncExpenseFormUI();
+    });
 
     $('expStatusSeg').addEventListener('click', (e) => {
       const btn = e.target.closest('.seg-btn');
@@ -2559,8 +3623,7 @@
     });
 
     $('toggleMoreDetailsBtn').addEventListener('click', () => {
-      const isCurrentlyHidden = $('moreDetailsBox').classList.contains('hidden');
-      setMoreDetailsOpen(isCurrentlyHidden);
+      setMoreDetailsOpen($('moreDetailsBox').classList.contains('hidden'));
     });
 
     function openExpenseModal(item = null) {
@@ -2570,6 +3633,8 @@
       $('expGroup').value = item ? item.group : 'Casa';
       $('expType').value = item ? item.type : 'Fixa';
       $('expPlanned').value = item ? item.planned : '';
+      $('expDueDay').value = item && item.dueDay ? item.dueDay : '';
+      $('expOwner').value = item && item.owner ? item.owner : 'Compartilhado';
 
       const status = item ? item.status : 'ABERTO';
       $('expStatus').value = status;
@@ -2588,7 +3653,6 @@
       $('expQty').value = cleanQty;
       $('expNote').value = cleanNote;
 
-      // Abre "Mais opções" automaticamente só se o item editado já tiver detalhes extras
       const hasMore = !!(cleanQty || cleanNote || (status === 'ABERTO' && item && Number(item.paid) > 0));
       setMoreDetailsOpen(hasMore);
 
@@ -2603,8 +3667,11 @@
       e.preventDefault();
       const m = structuredClone(getCurrentMonthData());
       const id = $('expId').value;
+      const existing = id ? m.expenses.find((x) => x.id === id) : null;
       const planned = parseFloat($('expPlanned').value) || 0;
       const status = $('expStatus').value;
+      const rawDue = parseInt($('expDueDay').value, 10);
+      const dueDay = rawDue >= 1 && rawDue <= 31 ? rawDue : null;
 
       let paid = 0;
       if (status === 'PAGO') {
@@ -2629,13 +3696,16 @@
         name: $('expName').value.trim(),
         group: $('expGroup').value,
         type: $('expType').value,
+        owner: $('expOwner').value || 'Compartilhado',
+        dueDay,
         qty: $('expQty').value.trim() || '-',
         note: $('expNote').value.trim(),
         planned,
         paid,
         status,
         installmentCurrent: isInst && instTot ? instCur : null,
-        installmentTotal: isInst && instTot ? instTot : null
+        installmentTotal: isInst && instTot ? instTot : null,
+        entries: existing?.entries || []
       };
 
       if (id) {
@@ -2722,14 +3792,16 @@
             id: uid('e'),
             installmentCurrent: e.installmentCurrent + 1,
             paid: 0,
-            status: 'ABERTO'
+            status: 'ABERTO',
+            entries: []
           });
         } else {
           nextExpenses.push({
             ...e,
             id: uid('e'),
             paid: 0,
-            status: 'ABERTO'
+            status: 'ABERTO',
+            entries: []
           });
         }
       }
@@ -2777,18 +3849,19 @@
     });
 
     // ===== TABS & FILTROS =====
-    document.querySelectorAll('.tab-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        state.activeTab = btn.dataset.tab;
-        ['lancamentos', 'parcelamentos', 'analise'].forEach((t) => {
-          $(`tab-${t}`).classList.toggle('hidden', t !== state.activeTab);
-        });
+    function switchTab(tabName) {
+      state.activeTab = tabName;
+      document.querySelectorAll('.tab-btn').forEach((b) => b.classList.toggle('active', b.dataset.tab === tabName));
+      ['lancamentos', 'parcelamentos', 'metas', 'analise'].forEach((t) => {
+        $(`tab-${t}`).classList.toggle('hidden', t !== tabName);
       });
+    }
+
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
-    ['searchInput', 'groupFilter', 'typeFilter', 'statusFilter'].forEach((id) => {
+    ['searchInput', 'sortFilter', 'groupFilter', 'typeFilter', 'statusFilter', 'ownerFilter'].forEach((id) => {
       $(id).addEventListener('input', () => renderExpensesList(getCurrentMonthData()));
       $(id).addEventListener('change', () => renderExpensesList(getCurrentMonthData()));
     });
@@ -2806,7 +3879,7 @@
 
     $('exportCsvBtn').addEventListener('click', () => {
       const m = getCurrentMonthData();
-      const header = ['Mês', 'Status', 'Item', 'Grupo', 'Tipo', 'Qtde/Parcela', 'Previsto', 'Valor Pago', 'Observação'];
+      const header = ['Mês', 'Status', 'Item', 'Grupo', 'Tipo', 'Quem Paga', 'Vencimento', 'Qtde/Parcela', 'Previsto', 'Valor Pago', 'Observação'];
       const rows = (m.expenses || []).map((e) => {
         const qp = e.installmentTotal ? `${e.installmentCurrent}/${e.installmentTotal}` : (e.qty || '-');
         return [
@@ -2815,6 +3888,8 @@
           `"${String(e.name).replace(/"/g, '""')}"`,
           e.group,
           e.type,
+          e.owner || 'Compartilhado',
+          e.dueDay ? `Dia ${e.dueDay}` : '-',
           qp,
           Number(e.planned || 0).toFixed(2).replace('.', ','),
           Number(e.paid || 0).toFixed(2).replace('.', ','),
@@ -2827,7 +3902,11 @@
     });
 
     $('exportJsonBtn').addEventListener('click', () => {
-      const payload = JSON.stringify({ exportedAt: new Date().toISOString(), months: state.months }, null, 2);
+      const payload = JSON.stringify({
+        exportedAt: new Date().toISOString(),
+        months: state.months,
+        goals: state.goals
+      }, null, 2);
       downloadFile(payload, `backup-financas-${state.currentMonth}.json`, 'application/json');
       showToast('Backup JSON baixado!');
     });
@@ -2842,11 +3921,14 @@
         const data = JSON.parse(text);
         const monthsObj = data.months || data;
         const ids = Object.keys(monthsObj).filter((k) => /^\d{4}-\d{2}$/.test(k));
-        if (!ids.length) throw new Error('Formato inválido');
+        if (!ids.length && !Array.isArray(data.goals)) throw new Error('Formato inválido');
         for (const id of ids) {
           await setDoc(doc(db, 'meses', id), monthsObj[id]);
         }
-        showToast(`${ids.length} mês(es) restaurado(s) na nuvem!`);
+        if (Array.isArray(data.goals)) {
+          await saveGoals(data.goals);
+        }
+        showToast(`Backup restaurado (${ids.length} mês(es)${Array.isArray(data.goals) ? ` e ${data.goals.length} meta(s)` : ''})!`);
       } catch {
         showToast('Arquivo de backup inválido.');
       } finally {
