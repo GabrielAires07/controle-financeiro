@@ -1547,7 +1547,7 @@
           <button id="prevMonthBtn" title="Mês anterior" aria-label="Mês anterior">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
           </button>
-          <div id="currentMonthLabel" class="month-label">Novembro 2026</div>
+          <div id="currentMonthLabel" class="month-label">Carregando...</div>
           <button id="nextMonthBtn" title="Próximo mês" aria-label="Próximo mês">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
           </button>
@@ -1613,7 +1613,7 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
             </button>
           </div>
-          <div id="kpiIncome" class="kpi-value">R$ •••••</div>
+          <div id="kpiIncome" class="kpi-value">R$ 0,00</div>
           <div class="kpi-foot">
             <span id="kpiIncomeSub">Gabriel + Sabrina</span>
             <strong style="color:#34d399">100% da Renda</strong>
@@ -1625,10 +1625,10 @@
             <span class="kpi-label">Despesas Totais</span>
             <span id="kpiExpPct" class="kpi-chip">0% da Renda</span>
           </div>
-          <div id="kpiExpenses" class="kpi-value">R$ •••••</div>
+          <div id="kpiExpenses" class="kpi-value">R$ 0,00</div>
           <div class="kpi-foot">
-            <span>Fixas: <strong id="kpiFixed">R$ •••••</strong></span>
-            <span>Var: <strong id="kpiVar">R$ •••••</strong></span>
+            <span>Fixas: <strong id="kpiFixed">R$ 0,00</strong></span>
+            <span>Var: <strong id="kpiVar">R$ 0,00</strong></span>
           </div>
           <div class="kpi-link-hint">
             <span>Ver lista completa</span>
@@ -1641,9 +1641,9 @@
             <span class="kpi-label">Pago vs A Pagar</span>
             <span id="kpiPaidPct" class="kpi-chip green">0%</span>
           </div>
-          <div id="kpiPaid" class="kpi-value">R$ •••••</div>
+          <div id="kpiPaid" class="kpi-value">R$ 0,00</div>
           <div class="kpi-foot">
-            <span>Restam: <strong id="kpiOpen" class="amber">R$ •••••</strong></span>
+            <span>Restam: <strong id="kpiOpen" class="amber">R$ 0,00</strong></span>
           </div>
           <div class="progress-track">
             <div id="kpiPaidBar" class="progress-bar" style="width:0%"></div>
@@ -1655,7 +1655,7 @@
             <span class="kpi-label">Sobra Projetada</span>
             <span id="kpiSavePct" class="kpi-chip green">0% Poupado</span>
           </div>
-          <div id="kpiLeftover" class="kpi-value green">R$ •••••</div>
+          <div id="kpiLeftover" class="kpi-value green">R$ 0,00</div>
         </div>
       </section>
 
@@ -1734,7 +1734,7 @@
       <section id="tab-parcelamentos" class="hidden">
         <div class="section-grid">
           <div class="panel-card">
-            <h3><span>Parcelamentos Ativos neste Mês</span><span id="parcelTotalBadge" class="kpi-chip">R$ •••••</span></h3>
+            <h3><span>Parcelamentos Ativos neste Mês</span><span id="parcelTotalBadge" class="kpi-chip">R$ 0,00</span></h3>
             <div id="parcelList"></div>
           </div>
           <div class="panel-card">
@@ -1752,7 +1752,7 @@
               <span class="kpi-label">Total nas Caixinhas</span>
               <span id="goalsCountChip" class="kpi-chip green">0 metas</span>
             </div>
-            <div id="goalsTotalSaved" class="kpi-value green">R$ •••••</div>
+            <div id="goalsTotalSaved" class="kpi-value green">R$ 0,00</div>
             <div class="kpi-foot"><span>Acumulado de vocês dois</span></div>
           </div>
           <div class="kpi-card cyan">
@@ -1760,7 +1760,7 @@
               <span class="kpi-label">Sobra Disponível do Mês</span>
               <span id="goalsMonthTag" class="kpi-chip">Novembro</span>
             </div>
-            <div id="goalsMonthLeftover" class="kpi-value">R$ •••••</div>
+            <div id="goalsMonthLeftover" class="kpi-value">R$ 0,00</div>
             <div class="kpi-foot"><span>Dê um destino para a sobra antes de gastar</span></div>
           </div>
         </div>
@@ -1817,15 +1817,15 @@
       <div class="all-exp-summary">
         <div class="mini-stat">
           <span>Total do Mês</span>
-          <strong id="allExpTotalVal">R$ •••••</strong>
+          <strong id="allExpTotalVal">R$ 0,00</strong>
         </div>
         <div class="mini-stat">
           <span>Já Pago</span>
-          <strong id="allExpPaidVal" style="color:#34d399">R$ •••••</strong>
+          <strong id="allExpPaidVal" style="color:#34d399">R$ 0,00</strong>
         </div>
         <div class="mini-stat">
           <span>Ainda em Aberto</span>
-          <strong id="allExpOpenVal" style="color:#fbbf24">R$ •••••</strong>
+          <strong id="allExpOpenVal" style="color:#fbbf24">R$ 0,00</strong>
         </div>
       </div>
 
@@ -2014,7 +2014,7 @@
           <span class="muted" style="font-size:0.8rem">Acumulado no mês</span>
           <strong id="quickAddBudgetInfo" style="font-size:0.82rem"></strong>
         </div>
-        <div id="quickAddCurrentVal" style="font-size:1.35rem;font-weight:800;color:#34d399">R$ •••••</div>
+        <div id="quickAddCurrentVal" style="font-size:1.35rem;font-weight:800;color:#34d399">R$ 0,00</div>
         <div class="progress-track" style="height:8px">
           <div id="quickAddBar" class="progress-bar" style="width:0%"></div>
         </div>
@@ -2223,11 +2223,14 @@
       months: {},
       goals: [],
       currentMonth: '2026-11',
+      hasSelectedInitialMonth: false,
+      hasSyncedFromServer: false,
+      userNavigatedMonth: false,
       activeTab: 'lancamentos',
       currentView: 'dashboard',
       allExpFilter: 'ALL',
       allExpMode: 'grouped',
-      privacyMode: true,
+      privacyMode: false,
       selectedGoalColor: '#10b981',
       user: null,
       unsubSnapshot: null,
@@ -2292,7 +2295,7 @@
         .replace(/"/g, '&quot;');
     }
 
-    // ===== MODO PRIVACIDADE (SEMPRE INICIA OCULTO AO ABRIR O APP) =====
+    // ===== MODO PRIVACIDADE (ABRE VISÍVEL; TOQUE NO OLHO PARA OCULTAR) =====
     function updatePrivacyUI() {
       $('privacyIconWrap').innerHTML = state.privacyMode ? ICON_EYE_OFF : ICON_EYE_OPEN;
       $('privacyBtn').classList.toggle('privacy-on', state.privacyMode);
@@ -2433,6 +2436,9 @@
     // ===== REALTIME FIRESTORE SYNC (MESES + METAS NA MESMA COLEÇÃO) =====
     function startRealtimeSync() {
       if (state.unsubSnapshot) state.unsubSnapshot();
+      state.hasSelectedInitialMonth = false;
+      state.hasSyncedFromServer = false;
+      state.userNavigatedMonth = false;
       setSyncStatus('saving', 'Conectando...');
 
       const colRef = collection(db, 'meses');
@@ -2468,8 +2474,21 @@
           state.goals = nextGoals;
 
           const keys = Object.keys(nextMonths).sort();
-          if (keys.length && !nextMonths[state.currentMonth]) {
-            state.currentMonth = keys[keys.length - 1];
+          if (keys.length) {
+            const latestMonth = keys[keys.length - 1];
+            const isFromCache = !!(snapshot.metadata && snapshot.metadata.fromCache);
+            const shouldJumpToLatest =
+              !state.hasSelectedInitialMonth ||
+              (!state.hasSyncedFromServer && !isFromCache && !state.userNavigatedMonth) ||
+              !nextMonths[state.currentMonth];
+
+            if (shouldJumpToLatest) {
+              state.currentMonth = latestMonth;
+              state.hasSelectedInitialMonth = true;
+            }
+            if (!isFromCache) {
+              state.hasSyncedFromServer = true;
+            }
           }
 
           setSyncStatus(navigator.onLine ? 'ok' : 'offline', navigator.onLine ? 'Sincronizado' : 'Offline');
@@ -3819,6 +3838,7 @@
         expenses: nextExpenses
       };
 
+      state.userNavigatedMonth = true;
       state.currentMonth = nextId;
       saveMonth(nextId, nextMonthData, `${formatMonthId(nextId)} gerado e sincronizado!`);
 
@@ -3837,6 +3857,7 @@
       const keys = Object.keys(state.months).sort();
       const idx = keys.indexOf(state.currentMonth);
       if (idx > 0) {
+        state.userNavigatedMonth = true;
         state.currentMonth = keys[idx - 1];
         renderAll();
       } else {
@@ -3848,6 +3869,7 @@
       const keys = Object.keys(state.months).sort();
       const idx = keys.indexOf(state.currentMonth);
       if (idx >= 0 && idx < keys.length - 1) {
+        state.userNavigatedMonth = true;
         state.currentMonth = keys[idx + 1];
         renderAll();
       } else {
